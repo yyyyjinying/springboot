@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey1024.crud.mapper.StudentMapper">
+
+    <!--查询多条数据-->
+    <!--resultType是数据返回放到哪个类型中-->
+    <select id="selectAllStudent" resultType="com.monkey1024.crud.bean.Student">
+        SELECT id,name,age,score FROM t_student
+    </select>
+
+    <select id="selectStudentById" resultType="com.monkey1024.crud.bean.Student">
+        SELECT id,name,age,score FROM t_student WHERE id=#{id}
+    </select>
+
+
+    <!--修改-->
+    <update id="updateStudent">
+        UPDATE t_student SET name=#{name},age=#{age},score=#{score} WHERE id=#{id}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteStudent">
+        DELETE FROM t_student Where id=#{id}
+    </delete>
+
+    <!--新增-->
+    <insert id="addStudent">
+        INSERT INTO t_student(name,age,score) VALUES (#{name},#{age},#{score})
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT @@identity
+        </selectKey>
+    </insert>
+
+</mapper>

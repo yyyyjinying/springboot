@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.mapper.StudentMapper">
+	<resultMap id="sMap" type="student">
+		<!--<id column="id" property="id"></id>-->
+		<!--<result column="name" property="name"></result>-->
+		<!--<result column="age" property="age"></result>-->
+		<result column="tid" property="tid"></result>
+		<association property="teacher" column="tid" select="com.bjsxt.mapper.MultiMapper.selTid"></association>
+	</resultMap>
+	<select id="selStudent" resultMap="sMap">
+		select * from student
+	</select>
+</mapper>

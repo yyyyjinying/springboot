@@ -1,0 +1,22 @@
+GET http://localhost:8080/testa
+Content-Type: text/html
+Cookie: name=jack
+
+<> 2019-04-01T024830.200.txt
+
+###
+
+GET http://localhost:8080/testa
+Content-Type: text/html
+Cookie: name=jack
+
+<> 2019-04-01T024739.200.txt
+
+###
+
+GET http://localhost:8080/resources
+Accept: */*
+Cache-Control: no-cache
+
+###
+

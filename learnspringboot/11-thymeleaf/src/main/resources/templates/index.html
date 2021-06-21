@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring boot集成 Thymeleaf</title>
+</head>
+<body>
+    <!--<div th:text="${name}">Spring boot集成 Thymeleaf</div>-->
+    <!--<div>paul</div>-->
+
+    <!--获取对象中的数据-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td th:text="${user.id}">1</td>-->
+            <!--<td th:text="${user.name}">A</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--&lt;!&ndash;选择变量表达式&ndash;&gt;-->
+    <!--<table>-->
+        <!--<tr th:object="${user}">-->
+            <!--<td th:text="*{id}">1</td>-->
+            <!--<td th:text="*{name}">A</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+
+    <!--url表达式-->
+    <!--<a href="info.html" th:href="@{/user/info(id=${user.id})}">参数拼接</a><br>-->
+    <!--<a href="info.html" th:href="@{/user/info(id=${user.id},name=${user.name})}">多参数拼接</a><br>-->
+    <!--<a href="info.html" th:href="@{/user/info/{id}(id=${user.id})}">restful风格1</a><br>-->
+    <!--<a href="info.html" th:href="@{/user/info/{id}/abc(id=${user.id})}">restful风格2</a><br>-->
+
+    <!--字符串的拼接-->
+    <!--<span th:text="'当前第'+${page}+'页，共'+${page}+'页'"></span><br>-->
+    <!--<span th:text="|当前第${page}页，共${page}页|"></span>-->
+
+    <!--内置对象-->
+    <!--<div th:text="${#request.getContextPath()}"></div>-->
+    <!--<div th:text="${#session.getAttribute('phone')}"></div>-->
+    <!--<div th:text="${#dates.format(myDate,'yyyy-MM-dd')}"></div>-->
+
+    <!--将下面内容删掉即可，否则运行会报错-->
+    <!--inline:text-->
+    <!--<span th:inline="text">hello,[[${name}]]</span>-->
+    <!--<span>hello,<span th:text="${name}"></span></span>-->
+
+    <!--inline:none-->
+    <!--<div th:inline="none">[[1,2,3]]</div>-->
+    <!--js中获取后台传过来的数据-->
+    <script th:inline="javascript" type="text/javascript">
+
+        var msg = "hello" + [[${name}]];
+        console.log(msg);
+    </script>
+</body>
+
+</html>

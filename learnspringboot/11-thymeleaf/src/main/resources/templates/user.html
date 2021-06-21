@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring boot集成 Thymeleaf</title>
+</head>
+<body>
+
+<!--遍历list-->
+    <!--<table>-->
+        <!--<tr th:each="user,interStat:${list}">-->
+            <!--<td th:text="${interStat.index}"></td>-->
+            <!--<td th:text="${user.id}">id</td>-->
+            <!--<td th:text="${user.name}">name</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+
+    <!--<table>-->
+        <!--<tr th:each="user:${list}">-->
+            <!--<td th:text="${userStat.index}"></td>-->
+            <!--<td th:text="${user.id}">id</td>-->
+            <!--<td th:text="${user.name}">name</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+
+<!--遍历map-->
+
+    <table>
+        <tr th:each="myMap:${map}">
+            <td th:text="${myMapStat.index}"></td>
+            <td th:text="${myMap.key}"></td>
+            <td th:text="${myMap.value.id}"></td>
+            <td th:text="${myMap.value.name}"></td>
+
+        </tr>
+    </table>
+
+</body>
+</html>

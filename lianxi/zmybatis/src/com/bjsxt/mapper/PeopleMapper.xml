@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.mapper.PeopleMapper">
+	<select id="selAll" resultType="com.bjsxt.pojo.People">
+		select * from people
+	</select>
+	<select id="selById" parameterType="int" resultType="peo">
+		select * from people where id=#{0}
+	</select>
+    <!--<select id="sel$ById" parameterType="com.bjsxt.pojo.People" resultType="com.bjsxt.pojo.People">-->
+		<!--select * from people where id=${id}-->
+	<!--</select>-->
+
+    <select id="sel$ById" parameterType="int" resultType="com.bjsxt.pojo.People">
+		select * from people where id=${id}
+	</select>
+
+    <select id="selMapById" parameterType="map" resultType="com.bjsxt.pojo.People">
+		select * from people where id=#{id} and name=#{name}
+	</select>
+
+    <select id="selBolId" parameterType="int" resultType="com.bjsxt.pojo.People">
+        <![CDATA[
+          select * from people where id > #{id}
+        ]]>
+    </select>
+    <select id="selectLimit" parameterType="map" resultType="com.bjsxt.pojo.People">
+        select * from people limit #{pageStart},#{pageSize}
+
+    </select>
+
+	<insert id="ins" parameterType="com.bjsxt.pojo.People">
+		insert into people values(default,#{name},#{age});
+	</insert>
+
+	<update id="update" parameterType="com.bjsxt.pojo.People">
+		  update people set
+			name = #{name}
+		  where id = #{id}
+	</update>
+
+	<delete id="del" parameterType="int">
+ 		delete from people where id = #{0}
+	</delete>
+
+	<!--分页sql-->
+	<select id="selByPage" parameterType="people" resultType="map">
+		select * from people limit #{pageStart},#{pageSize}
+	</select>
+
+	<!--行记录数-->
+	<select id="selCount" resultType="long">
+		select count(*) from people
+	</select>
+</mapper>

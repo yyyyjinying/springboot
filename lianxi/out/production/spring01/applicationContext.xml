@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--id表示获取对象表示
+    class 创建哪个类的对象
+    -->
+
+    <bean id="peo" class="com.bjsxt.pojo.People">
+        <constructor-arg index="0" name="id" type="int" value="123"></constructor-arg>
+        <constructor-arg index="1" name="name" type="java.lang.String" value="张三"></constructor-arg>
+        <property name="id">
+            <value>234</value>
+        </property>
+        <property name="name">
+            <value>zhangsan</value>
+        </property>
+
+        <property name="sets">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+                <value>4</value>
+            </set>
+        </property>
+
+        <property name="list" value="1,2,3"></property>
+        <property name="strs">
+            <array>
+                <value>1</value>
+                <value>2</value>
+            </array>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="a" value="b"></entry>
+                <entry key="c" value="d"></entry>
+            </map>
+
+        </property>
+
+        <property name="desk" ref="desk"></property>
+
+
+    </bean>
+
+    <bean id="desk" class="com.bjsxt.pojo.Desk">
+        <property name="id" value="1"></property>
+        <property name="price" value="12.2"></property>
+    </bean>
+    <!--<bean id="factory" class="com.bjsxt.pojo.PeopleFactory"></bean>-->
+    <!--<bean id="peo1" factory-bean="factory" factory-method="newInstance"></bean>-->
+
+    <!--<bean id="peo1" class="com.bjsxt.pojo.PeopleFactory" factory-method="newInstance"></bean>-->
+</beans>

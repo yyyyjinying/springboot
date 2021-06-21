@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+
+<body>
+<div><a href="/user/toAdd">添加用户</a></div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>分数</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="stu:${users}">
+        <td th:text="${stu.id}">1</td>
+        <td th:text="${stu.name}">jack</td>
+        <td th:text="${stu.phone}">11</td>
+        <td th:text="${stu.address}">98</td>
+        <td th:text="${stu.birthday}">98</td>
+        <td>
+            <a th:href="@{/user/toUpdate(id=${stu.id})}">修改</a>
+            <a th:href="@{/user/del(id=${stu.id})}">删除</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+</body>
+</html>

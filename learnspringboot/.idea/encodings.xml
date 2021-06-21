@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/01-first" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/02-properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/03-jsp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/04-mybatis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/05-interceptor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/06-actuator-client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/07-actuator-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/08-autoconfigure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/09-starter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/10-test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/11-thymeleaf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/12-war" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/13-crud" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
