@@ -5,7 +5,6 @@ target/
 !**/src/test/**/target/
 
 ### STS ###
-.idea/workspace.xml
 .apt_generated
 .classpath
 .factorypath
@@ -16,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.idea/
 *.iws
 *.iml
 *.ipr
