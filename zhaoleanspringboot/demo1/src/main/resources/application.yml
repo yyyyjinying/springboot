@@ -3,18 +3,8 @@ server:
   port: 9090
 #  servlet:
 #    context-path: /aa
-#spring:
-#    devtools:
-#        restart:
-#            #热部署生效
-#          enabled: true
-#            #设置重启的目
 spring:
   http:
-    encoding:
-      charset: utf-8
-      enabled: true
-      force: true
 #  profiles:
 #    active: dev
   datasource:
@@ -37,30 +27,4 @@ mybatis:
 #打印日志
 logging:
   level:
-   zhao.demo.mapper: debug
-   web:
-    DEBUG
-
-#spring.thymeleaf.cache=false
-
-#开发阶段，建议关闭thymeleaf的缓
-#logging:
-#  level:
-#    root: debug
-
-#school:
-#  name: 小猴子
-#  address: 北京
-#  age: 101
-#server:
-#  port: 8082
-#info:
-#  author: monkey1024
-#  url: www.monkey1024.com
-#management:
-#  server:
-#    port: 8081
-#  endpoints:
-#    web:
-#      exposure:
-#        include: *
+   com.zhao.demo: debug
