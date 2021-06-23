@@ -21,9 +21,16 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
-mybatis:
-  type-aliases-package: com.zhao.demo.bean
-  mapper-locations: classpath:mapper/*.xml
+#mybatis:
+#  type-aliases-package: com.zhao.demo.bean
+#  mapper-locations: classpath:mapper/*.xml
+#mybatis-plus:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.zhao.demo.bean
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml,classpath:mapper/*/*.xml
+  typeAliasesPackage: com.zhao.demo.bean
+
 #打印日志
 logging:
   level:

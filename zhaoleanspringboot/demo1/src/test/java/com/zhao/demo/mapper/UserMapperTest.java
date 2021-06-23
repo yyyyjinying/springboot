@@ -1,7 +1,9 @@
 package com.zhao.demo.mapper;
+import com.zhao.demo.bean.Muser;
 import com.zhao.demo.bean.User;
 import com.zhao.demo.bean.Users;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,16 @@ public class UserMapperTest {
         Users listUsers = usersMapper.selByUsers(users);
         System.out.println(listUsers);
         log.debug("赵晋英");
+    }
+
+    @Autowired
+    private MuserMapper muserMapper;
+
+    @Test
+    public void testSelect() {
+        List<Muser> musers = muserMapper.selectList(null);
+        Assert.assertEquals(5,musers.size());
+        musers.forEach(System.out::println); // 函数式编程
     }
 
 }
