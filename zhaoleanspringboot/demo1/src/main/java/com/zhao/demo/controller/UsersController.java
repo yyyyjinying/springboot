@@ -1,6 +1,10 @@
 package com.zhao.demo.controller;
+import com.alibaba.fastjson.JSONObject;
+import com.zhao.common.utils.ResponseData;
 import com.zhao.demo.bean.Users;
 import com.zhao.demo.service.UsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/users")
+@Api(tags = "users列表接口")
 public class UsersController {
 
     @Autowired
@@ -15,6 +20,7 @@ public class UsersController {
 
 
     // http://localhost:9090/users/selByUsers?username=zhao&password=123
+    @ApiOperation(value="用户列表-查询参数")
     @GetMapping("/selByUsers")
     public Users selByUsers(@RequestParam("username") String username, @RequestParam("password") String password){
         Users users = new Users();
@@ -24,13 +30,14 @@ public class UsersController {
     }
 
     //    http://localhost:9090/users/selByUsers/zhao/123
+    @ApiOperation(value="用户列表-路径参数")
     @GetMapping("/selByUsers/{username}/{password}")
-    public Users selByVarUsers(@PathVariable("username") String username, @PathVariable("password") String password){
+    public ResponseData selByVarUsers(@PathVariable("username") String username, @PathVariable("password") String password){
         Users users = new Users();
         users.setUsername(username);
         users.setPassword(password);
-        log.info("赵晋英------");
-        return usersService.selByUsers(users);
+        Users data = usersService.selByUsers(users);
+        return ResponseData.ok(data);
     }
 
 }
