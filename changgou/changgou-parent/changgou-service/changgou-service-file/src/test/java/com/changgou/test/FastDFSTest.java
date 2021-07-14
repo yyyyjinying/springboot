@@ -10,6 +10,12 @@ import java.io.*;
 
 @Slf4j
 public class FastDFSTest {
+    @Test
+    public void getTrackerUrl(){
+        String trackerUrl = FastDFSClient.getTrackerUrl();
+        log.debug(trackerUrl);
+
+    }
 
     @Test
     public void downLoad(){

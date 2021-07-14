@@ -45,7 +45,7 @@ public class FileController {
 
             String[] upload = FastDFSClient.fUpload(fastDFSFile);
             String trackerUrl = FastDFSClient.getTrackerUrl();
-            String url = trackerUrl+upload[0]+"/"+upload[1];
+            String url = trackerUrl+"/"+upload[0]+"/"+upload[1];
 
             return new Result(true, StatusCode.OK, "上传文件成功",url);
         } catch (IOException e) {
