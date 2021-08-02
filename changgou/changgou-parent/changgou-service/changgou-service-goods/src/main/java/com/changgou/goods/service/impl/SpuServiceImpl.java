@@ -352,7 +352,7 @@ public class SpuServiceImpl implements SpuService {
      * @return
      */
     @Override
-    public Spu findById(String id){
+    public Spu findById(Long id){
         return  spuMapper.selectByPrimaryKey(id);
     }
 

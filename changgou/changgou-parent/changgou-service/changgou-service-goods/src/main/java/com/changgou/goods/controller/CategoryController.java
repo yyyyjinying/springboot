@@ -5,9 +5,11 @@ import com.changgou.goods.service.CategoryService;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /****
@@ -24,6 +26,12 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+
+    @PostMapping(value = "/inList")
+    public Result<List<Category>> findCategoryIdName(@RequestBody(required = true) List<Integer> ids){
+        List<Category> categoryIdName = categoryService.findCategoryIdName(ids);
+        return new Result<List<Category>>(true, StatusCode.OK, "请求成功！",categoryIdName);
+    }
     /***
      * Category分页条件搜索实现
      * @param category

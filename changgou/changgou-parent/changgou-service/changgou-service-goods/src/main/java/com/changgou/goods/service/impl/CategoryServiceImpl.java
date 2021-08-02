@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /****
@@ -23,6 +25,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+
+    @Override
+    public List<Category> findCategoryIdName(List<Integer> ids) {
+        return categoryMapper.findCategoryIdName(ids);
+    }
 
     /**
      * Category条件+分页查询

@@ -48,4 +48,7 @@ public interface CategoryMapper extends Mapper<Category> {
     })
     @Select("select * from tb_category where parent_id=#{id}")
     List<Category> selectByPid(int id);
+
+
+    List<Category> findCategoryIdName(List<Integer> ids);
 }

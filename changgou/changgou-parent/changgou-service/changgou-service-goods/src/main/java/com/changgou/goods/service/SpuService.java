@@ -67,7 +67,7 @@ public interface SpuService {
      * @param id
      * @return
      */
-     Spu findById(String id);
+     Spu findById(Long id);
 
     /***
      * 查询所有Spu

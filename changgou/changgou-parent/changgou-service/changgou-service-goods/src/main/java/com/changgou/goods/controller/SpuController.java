@@ -1,7 +1,11 @@
 package com.changgou.goods.controller;
 
+import com.changgou.goods.pojo.Brand;
+import com.changgou.goods.pojo.Category;
 import com.changgou.goods.pojo.Goods;
 import com.changgou.goods.pojo.Spu;
+import com.changgou.goods.service.BrandService;
+import com.changgou.goods.service.CategoryService;
 import com.changgou.goods.service.SpuService;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
@@ -9,7 +13,10 @@ import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /****
  * @Author:admin
@@ -24,6 +31,14 @@ public class SpuController {
 
     @Autowired
     private SpuService spuService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private BrandService brandService;
+
+
 
 
     @PostMapping(value = "/save")
@@ -116,10 +131,27 @@ public class SpuController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Spu> findById(@PathVariable String id){
+    public Result<Spu> findById(@PathVariable Long id){
         //调用SpuService实现根据主键查询Spu
         Spu spu = spuService.findById(id);
-        return new Result<Spu>(true,StatusCode.OK,"查询成功",spu);
+        Integer category1Id = spu.getCategory1Id();
+        Integer category2Id = spu.getCategory2Id();
+        Integer category3Id = spu.getCategory3Id();
+        ArrayList<Integer> intList = new ArrayList<>();
+        intList.add(category1Id);
+        intList.add(category2Id);
+        intList.add(category3Id);
+        List<Category> categoryIdName = categoryService.findCategoryIdName(intList);
+
+        List<Brand> brandByCategory = brandService.getBrandByCategory(category3Id);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("categoryIdName",categoryIdName);
+        map.put("spu",spu);
+        map.put("brandLists",brandByCategory);
+
+
+        return new Result<Spu>(true,StatusCode.OK,"查询成功",map);
     }
 
     /***

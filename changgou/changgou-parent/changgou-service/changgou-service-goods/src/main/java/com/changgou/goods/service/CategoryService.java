@@ -13,6 +13,8 @@ import java.util.Map;
  *****/
 public interface CategoryService {
 
+    List<Category> findCategoryIdName(List<Integer> ids);
+
     /***
      * Category多条件分页查询
      * @param category

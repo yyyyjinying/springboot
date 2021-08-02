@@ -23,8 +23,8 @@ logging:
   level:
    com.changgou: debug
 #mybatis的配置 可以不配置  需要整合通用mapper
-#mybatis:
+mybatis:
 #  configuration:
+  mapper-locations: classpath:mapper/*Mapper.xml
 #    map-underscore-to-camel-case: true
-#  mapper-locations: classpath:mapper/*Mapper.xml
 #  type-aliases-package: com.changgou.goods.pojo

@@ -1,5 +1,8 @@
 package com.changgou.goods.pojo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,6 +17,7 @@ import java.io.Serializable;
 public class Spu implements Serializable{
 
 	@Id
+	@JsonSerialize(using = ToStringSerializer.class)
     @Column(name = "id")
 	private Long id;//主键
 

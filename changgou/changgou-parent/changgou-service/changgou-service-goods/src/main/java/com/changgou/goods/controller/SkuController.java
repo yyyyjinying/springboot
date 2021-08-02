@@ -1,14 +1,25 @@
 package com.changgou.goods.controller;
 
+import com.changgou.goods.pojo.Para;
 import com.changgou.goods.pojo.Sku;
+import com.changgou.goods.pojo.Spec;
+import com.changgou.goods.pojo.Spu;
+import com.changgou.goods.service.ParaService;
 import com.changgou.goods.service.SkuService;
+import com.changgou.goods.service.SpecService;
+import com.changgou.goods.service.SpuService;
+import com.changgou.goods.service.impl.SpecServiceImpl;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /****
  * @Author:admin
@@ -23,6 +34,15 @@ public class SkuController {
 
     @Autowired
     private SkuService skuService;
+
+    @Autowired
+    private SpecService specService;
+
+    @Autowired
+    private ParaService paraService;
+
+    @Autowired
+    private SpuService spuService;
 
     /***
      * Sku分页条件搜索实现
@@ -57,10 +77,26 @@ public class SkuController {
      * @return
      */
     @PostMapping(value = "/search" )
-    public Result<List<Sku>> findList(@RequestBody(required = false)  Sku sku){
+    public Result<Map<String, Object>> findList(@RequestBody(required = false)  Sku sku){
         //调用SkuService实现条件查询Sku
         List<Sku> list = skuService.findList(sku);
-        return new Result<List<Sku>>(true,StatusCode.OK,"查询成功",list);
+        Integer categoryId = sku.getCategoryId();
+        List<Spec> sList = specService.findByCategoryId(categoryId);
+        List<Para> paraList = paraService.findByCategoryId(categoryId);
+        Map<String, Object> map = new HashMap<>();
+
+//        Long spuId = sku.getSpuId();
+//        Spu spu = spuService.findById(spuId);
+//
+//        String paraItems = spu.getParaItems();
+//        Locale locale = StringUtils.parseLocale(paraItems);
+//        System.out.println(locale);
+
+
+        map.put("sku", list);
+        map.put("specList", sList);
+        map.put("paraList", paraList);
+        return new Result<Map<String, Object>>(true,StatusCode.OK,"查询成功",map);
     }
 
     /***
@@ -108,10 +144,15 @@ public class SkuController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Sku> findById(@PathVariable String id){
+    public Result<Map<String, Object>> findById(@PathVariable String id){
         //调用SkuService实现根据主键查询Sku
         Sku sku = skuService.findById(id);
-        return new Result<Sku>(true,StatusCode.OK,"查询成功",sku);
+        Integer categoryId = sku.getCategoryId();
+        List<Spec> sList = specService.findByCategoryId(categoryId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("sku", sku);
+        map.put("specList", sList);
+        return new Result<Map<String, Object>>(true,StatusCode.OK,"查询成功",map);
     }
 
     /***
