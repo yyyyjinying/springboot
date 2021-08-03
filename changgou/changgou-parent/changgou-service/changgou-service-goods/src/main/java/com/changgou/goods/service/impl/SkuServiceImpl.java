@@ -24,6 +24,11 @@ public class SkuServiceImpl implements SkuService {
     private SkuMapper skuMapper;
 
 
+    @Override
+    public void editSkuSpec(Sku sku) {
+        skuMapper.updateByPrimaryKeySelective(sku);
+    }
+
     /**
      * Sku条件+分页查询
      * @param sku 查询条件
@@ -67,7 +72,6 @@ public class SkuServiceImpl implements SkuService {
         //根据构建的条件查询数据
         return skuMapper.selectByExample(example);
     }
-
 
     /**
      * Sku构建查询对象
@@ -167,7 +171,7 @@ public class SkuServiceImpl implements SkuService {
      * @param id
      */
     @Override
-    public void delete(String id){
+    public void delete(Long id){
         skuMapper.deleteByPrimaryKey(id);
     }
 
@@ -206,5 +210,13 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public List<Sku> findAll() {
         return skuMapper.selectAll();
+    }
+
+    @Override
+    public void deleteBySpuId(Long id) {
+        Sku sku = new Sku();
+        sku.setSpuId(id);
+        Example example = createExample(sku);
+        skuMapper.deleteByExample(example);
     }
 }

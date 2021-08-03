@@ -324,7 +324,7 @@ public class SpuServiceImpl implements SpuService {
      * @param id
      */
     @Override
-    public void delete(String id){
+    public void delete(Long id){
         spuMapper.deleteByPrimaryKey(id);
     }
 

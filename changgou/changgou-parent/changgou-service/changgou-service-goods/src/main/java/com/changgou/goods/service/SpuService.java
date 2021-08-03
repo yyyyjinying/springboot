@@ -48,7 +48,7 @@ public interface SpuService {
      * 删除Spu
      * @param id
      */
-    void delete(String id);
+    void delete(Long id);
 
     /***
      * 修改Spu数据

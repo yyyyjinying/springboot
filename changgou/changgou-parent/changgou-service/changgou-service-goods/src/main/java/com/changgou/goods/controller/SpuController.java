@@ -1,12 +1,7 @@
 package com.changgou.goods.controller;
 
-import com.changgou.goods.pojo.Brand;
-import com.changgou.goods.pojo.Category;
-import com.changgou.goods.pojo.Goods;
-import com.changgou.goods.pojo.Spu;
-import com.changgou.goods.service.BrandService;
-import com.changgou.goods.service.CategoryService;
-import com.changgou.goods.service.SpuService;
+import com.changgou.goods.pojo.*;
+import com.changgou.goods.service.*;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
@@ -37,6 +32,12 @@ public class SpuController {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private SkuService skuService;
+
+    @Autowired
+    private TemplateService templateService;
 
 
 
@@ -92,9 +93,11 @@ public class SpuController {
      * @return
      */
     @DeleteMapping(value = "/{id}" )
-    public Result delete(@PathVariable String id){
+    public Result delete(@PathVariable Long id){
         //调用SpuService实现根据主键删除
         spuService.delete(id);
+        skuService.deleteBySpuId(id);
+
         return new Result(true,StatusCode.OK,"删除成功");
     }
 
@@ -145,10 +148,14 @@ public class SpuController {
 
         List<Brand> brandByCategory = brandService.getBrandByCategory(category3Id);
 
+        Integer templateId = spu.getTemplateId();
+        Template template = templateService.findById(templateId);
+
         Map<String, Object> map = new HashMap<>();
         map.put("categoryIdName",categoryIdName);
         map.put("spu",spu);
         map.put("brandLists",brandByCategory);
+        map.put("template",template);
 
 
         return new Result<Spu>(true,StatusCode.OK,"查询成功",map);

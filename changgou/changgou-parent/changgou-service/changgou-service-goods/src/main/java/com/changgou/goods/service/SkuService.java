@@ -11,6 +11,10 @@ import java.util.List;
  * @Date 2019/6/14 0:16
  *****/
 public interface SkuService {
+    /**
+     * 修改sku的规格参数
+     */
+    void editSkuSpec(Sku sku);
 
     /***
      * Sku多条件分页查询
@@ -40,7 +44,7 @@ public interface SkuService {
      * 删除Sku
      * @param id
      */
-    void delete(String id);
+    void delete(Long id);
 
     /***
      * 修改Sku数据
@@ -66,4 +70,6 @@ public interface SkuService {
      * @return
      */
     List<Sku> findAll();
+
+    void deleteBySpuId(Long id);
 }

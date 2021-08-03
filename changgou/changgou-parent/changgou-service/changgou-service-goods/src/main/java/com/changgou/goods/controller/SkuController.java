@@ -1,13 +1,7 @@
 package com.changgou.goods.controller;
 
-import com.changgou.goods.pojo.Para;
-import com.changgou.goods.pojo.Sku;
-import com.changgou.goods.pojo.Spec;
-import com.changgou.goods.pojo.Spu;
-import com.changgou.goods.service.ParaService;
-import com.changgou.goods.service.SkuService;
-import com.changgou.goods.service.SpecService;
-import com.changgou.goods.service.SpuService;
+import com.changgou.goods.pojo.*;
+import com.changgou.goods.service.*;
 import com.changgou.goods.service.impl.SpecServiceImpl;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
@@ -43,6 +37,9 @@ public class SkuController {
 
     @Autowired
     private SpuService spuService;
+
+    @Autowired
+    private TemplateService templateService;
 
     /***
      * Sku分页条件搜索实现
@@ -85,6 +82,8 @@ public class SkuController {
         List<Para> paraList = paraService.findByCategoryId(categoryId);
         Map<String, Object> map = new HashMap<>();
 
+        Template template = templateService.findByCategoryId(categoryId);
+
 //        Long spuId = sku.getSpuId();
 //        Spu spu = spuService.findById(spuId);
 //
@@ -96,16 +95,37 @@ public class SkuController {
         map.put("sku", list);
         map.put("specList", sList);
         map.put("paraList", paraList);
+        map.put("template", template);
         return new Result<Map<String, Object>>(true,StatusCode.OK,"查询成功",map);
     }
 
+    /**
+     * 修改规格参数
+     * @param sku
+     * @return
+     */
+    @PostMapping(value = "/saveSkuSpec")
+    public Result editSkuSpec(@RequestBody(required = false) List<Sku> skuList){
+        for(Sku sku : skuList){
+            skuService.editSkuSpec(sku);
+        }
+        return new Result(true,StatusCode.OK, "修改成功！");
+
+
+    }
+
+    @PostMapping(value = "/skuList")
+    public Result<List<Sku>> findBySpuId(@RequestBody(required = true) Sku sku){
+        List<Sku> list = skuService.findList(sku);
+        return new Result<List<Sku>>(true, StatusCode.OK,"查询成功！",list);
+    }
     /***
      * 根据ID删除品牌数据
      * @param id
      * @return
      */
     @DeleteMapping(value = "/{id}" )
-    public Result delete(@PathVariable String id){
+    public Result delete(@PathVariable Long id){
         //调用SkuService实现根据主键删除
         skuService.delete(id);
         return new Result(true,StatusCode.OK,"删除成功");
