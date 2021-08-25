@@ -20,17 +20,11 @@ public class RedisTest {
     @Test
     public void redistest() {
         System.out.println("同时获取数据");
-
-//        RedisTemplate redisTemplate = new RedisTemplate();
-//
-        Object a = redisTemplate.opsForValue().get("a");
+        Object a = redisTemplate.opsForValue().get("bigimg");
         System.out.println(a);
 
-
-//        RedisTemplate<Object, Object> objectObjectRedisTemplate = new RedisTemplate<>();
-//        List<RedisClientInfo> clientList = objectObjectRedisTemplate.getClientList();
-//        RedisClientInfo a = clientList.get(Integer.parseInt("a"));
-//        System.out.println(a);
+        Boolean bigimg = redisTemplate.delete("bigimg");
+        System.out.println(bigimg);
 
     }
 

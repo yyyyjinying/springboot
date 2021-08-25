@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import tk.mybatis.spring.annotation.MapperScan;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"jedis.cluster","com.changgou"})
 @EnableEurekaClient
 @MapperScan(basePackages = {"com.changgou.goods.dao"})
 public class GoodsApplication {
