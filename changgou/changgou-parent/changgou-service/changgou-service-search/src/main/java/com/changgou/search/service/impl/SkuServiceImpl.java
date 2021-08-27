@@ -72,6 +72,20 @@ public class SkuServiceImpl implements SkuService {
         return categoryList;
     }
 
+    private List<String> getBrandList(NativeSearchQueryBuilder nativeSearchQueryBuilder) {
+        //获取分组结果
+        nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("skuBrand").field("brandName"));
+        AggregatedPage<SkuInfo> aggregatedPage = elasticsearchTemplate.queryForPage(nativeSearchQueryBuilder.build(), SkuInfo.class);
+        StringTerms stringTerms = aggregatedPage.getAggregations().get("skuBrand");
+
+        List<String> brandList = new ArrayList<>();
+        for (StringTerms.Bucket bucket : stringTerms.getBuckets()) {
+            String brandName = bucket.getKeyAsString();
+            brandList.add(brandName);
+        }
+        return brandList;
+    }
+
     @Override
     public Map search(Map<String, String> searchMap) {
         //2.创建查询对象 的构建对象
@@ -96,10 +110,13 @@ public class SkuServiceImpl implements SkuService {
 
         // 6.分组查询
         List<String> categoryList = getCategoryList(nativeSearchQueryBuilder);
+        List<String> brandList = getBrandList(nativeSearchQueryBuilder);
+
 
         //6.返回结果
         Map resultMap = new HashMap<>();
         resultMap.put("categoryList", categoryList);
+        resultMap.put("brandList", brandList);
         resultMap.put("rows", skuPage.getContent());
         resultMap.put("total", skuPage.getTotalElements());
         resultMap.put("totalPages", skuPage.getTotalPages());
