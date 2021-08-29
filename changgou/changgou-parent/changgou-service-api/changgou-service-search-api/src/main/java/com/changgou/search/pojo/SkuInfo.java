@@ -26,6 +26,16 @@ public class SkuInfo implements Serializable {
     @Field(type = FieldType.Text, analyzer = "ik_smart", index = true, store = false, searchAnalyzer = "ik_smart")
     private String name;
 
+//    private String titleName;
+//
+//    public String getTitleName() {
+//        return titleName;
+//    }
+//
+//    public void setTitleName(String titleName) {
+//        this.titleName = titleName;
+//    }
+
     //商品价格，单位为：元
     @Field(type = FieldType.Double)
     private Long price;

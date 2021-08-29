@@ -65,6 +65,7 @@ public class SkuServiceImpl implements SkuService {
         for (SkuInfo skuInfo : skuInfos) {
             Map<String, Object> specMap = JSON.parseObject(skuInfo.getSpec(), Map.class);
             skuInfo.setSpecMap(specMap);
+//            skuInfo.setTitleName(skuInfo.getName());
         }
         skuEsMapper.saveAll(skuInfos);
     }
@@ -214,7 +215,6 @@ public class SkuServiceImpl implements SkuService {
     /**
      * http://localhost:18086/search?spec_网络制式=4G&spec_手机屏幕尺寸=5寸&pageSize=20&sortField=price&sortRule=ASC
      * ?keywords=佐丹奴&spec_颜色=蓝色&spec_尺码=26码
-     *
      * @param searchMap
      * @return
      */

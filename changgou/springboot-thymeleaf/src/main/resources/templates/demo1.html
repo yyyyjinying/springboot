@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf的入门</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<!--输出hello数据-->
+<span>hello-</span><p th:text="${message}"></p>
+<form id="login-form" th:action="@{/test/hello}">
+    <button>提交</button>
+</form>
+</body>
+</html>
