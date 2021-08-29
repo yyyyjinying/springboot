@@ -149,8 +149,8 @@ public class SkuServiceImpl implements SkuService {
             if (!StringUtils.isEmpty(keywords)) {
                 //3.设置查询的条件
 //                nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("name", keywords));
-//                boolQueryBuilder.must(QueryBuilders.matchQuery("name", keywords));
-                boolQueryBuilder.must(QueryBuilders.multiMatchQuery(keywords,"name","brandName","categoryName"));
+                boolQueryBuilder.must(QueryBuilders.matchQuery("name", keywords));
+//                boolQueryBuilder.must(QueryBuilders.multiMatchQuery(keywords,"name","brandName","categoryName"));
             }
 
             // 分类筛选
@@ -199,9 +199,7 @@ public class SkuServiceImpl implements SkuService {
 
         // 构建查询
         NativeSearchQuery query = nativeSearchQueryBuilder.withQuery(boolQueryBuilder).build();
-        //5.执行查询
-        AggregatedPage<SkuInfo> skuPage = elasticsearchTemplate.queryForPage(query, SkuInfo.class);
-       /** AggregatedPage<SkuInfo> skuPage = elasticsearchTemplate.queryForPage(query, SkuInfo.class, new SearchResultMapper() {
+        AggregatedPage<SkuInfo> skuPage = elasticsearchTemplate.queryForPage(query, SkuInfo.class, new SearchResultMapper() {
             @Override
             public <T> AggregatedPage<T> mapResults(SearchResponse searchResponse, Class<T> aClass, Pageable pageable) {
                 // 存储转化后的高亮数据
@@ -211,6 +209,7 @@ public class SkuServiceImpl implements SkuService {
                     SkuInfo skuInfo = JSON.parseObject(hit.getSourceAsString(), SkuInfo.class);
 
                     HighlightField name = hit.getHighlightFields().get("name");
+                    // 如果有关键字就替换高亮
                     if (name != null && name.getFragments() != null) {
                         Text[] fragments = name.getFragments();
                         StringBuffer stringBuffer = new StringBuffer();
@@ -218,14 +217,15 @@ public class SkuServiceImpl implements SkuService {
                             stringBuffer.append(fragment.toString());
                         }
                         skuInfo.setName(stringBuffer.toString());
-                        list.add((T) skuInfo);
-                    }
-                }
 
+                    }
+                    // 返回搜索的结果
+                    list.add((T) skuInfo);
+                }
                 return new AggregatedPageImpl<T>(list, pageable, searchResponse.getHits().getTotalHits());
             }
         });
-        */
+
         return skuPage;
     }
 
