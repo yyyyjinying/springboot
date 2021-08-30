@@ -703,8 +703,8 @@
                             <a href="#">评价</a>
                         </li>
                         <li>
-                            <a th:href="@{${url}(sortField=price,sortRule=ASC)}">价格+</a>
-                            <a th:href="@{${url}(sortField=price,sortRule=DESC)}">价格-</a>
+                            <a th:href="@{${sortUrl}(sortField=price,sortRule=ASC)}">价格-ASC</a>
+                            <a th:href="@{${sortUrl}(sortField=price,sortRule=DESC)}">价格-DESC</a>
                         </li>
                     </ul>
                 </div>

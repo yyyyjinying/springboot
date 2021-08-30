@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
@@ -23,31 +25,41 @@ public class SkuController {
      * @return
      */
     @GetMapping(value = "/list")
-    public String search(@RequestParam(required = false) Map searchMap, Model model) {
+    public String search(@RequestParam(required = false) Map searchMap, Model model, HttpServletRequest httpServletRequest) {
         Map resultMap = skuFeign.search(searchMap);
         model.addAttribute("result", resultMap);
         model.addAttribute("searchMap", searchMap);
-        model.addAttribute("url", url(searchMap));
+        String[] url = url(httpServletRequest);
+        model.addAttribute("url", url[0]);
+        model.addAttribute("sortUrl", url[1]);
         return "search";
     }
 
-    private String url(Map<String, String> searchMap) {
-        String url = "/search/list";
-        if (searchMap != null && searchMap.size() > 0) {
-            url += "?";
-            for (Map.Entry<String, String> stringStringEntry : searchMap.entrySet()) {
-                //如果是排序 则 跳过 拼接排序的地址 因为有数据
-                String key = stringStringEntry.getKey();
-                String value = stringStringEntry.getValue();
+    private String[] url(HttpServletRequest httpServletRequest) {
+        String strurl = "/search/list";
+        StringBuilder url = new StringBuilder(strurl);
+        StringBuilder sortUrl = new StringBuilder(strurl);
+        Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
+        if (parameterMap.size() > 0) {
+            url.append("?");
+            sortUrl.append("?");
+            for (String key : parameterMap.keySet()) {
+                String value = parameterMap.get(key)[0];
 
+                url.append(key).append("=").append(value).append("&");
+                // sort取最新的值
                 if (key.equalsIgnoreCase("sortField") || key.equalsIgnoreCase("sortRule")) {
                     continue;
                 }
-                url += key + "=" + value + "&";
+                sortUrl.append(key).append("=").append(value).append("&");
+
             }
-            url = url.substring(0, url.length() - 1);
+            return new String[]{
+                    url.substring(0, url.length() - 1),
+                    sortUrl.substring(0, sortUrl.length() - 1)
+            };
         }
-        return url;
+        return new String[]{strurl,strurl};
     }
 }
 
