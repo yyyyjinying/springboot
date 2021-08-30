@@ -152,7 +152,7 @@ public class SkuServiceImpl implements SkuService {
             // 规格筛选
             for (String key : searchMap.keySet()) {
                 if (key.startsWith("spec_")) {
-                    String value = searchMap.get(key);
+                    String value = searchMap.get(key).replace("%2B","+");
                     boolQueryBuilder.must(QueryBuilders.termQuery("specMap." + key.substring(5) + ".keyword", value));
                 }
 

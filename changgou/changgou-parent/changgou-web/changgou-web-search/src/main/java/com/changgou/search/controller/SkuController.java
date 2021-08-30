@@ -20,6 +20,18 @@ public class SkuController {
     @Autowired
     private SkuFeign skuFeign;
 
+    private void setSearchMapSpecValue(Map searchMap) {
+        if (searchMap != null && searchMap.size() > 0) {
+            for (Object key : searchMap.keySet()) {
+                if (key.toString().startsWith("spec_")) {
+                    String value = searchMap.get(key).toString();
+                    String replace = value.replace("+", "%2B");
+                    searchMap.put(key, replace);
+                }
+            }
+        }
+    }
+
     /**
      * 搜索
      *
@@ -28,6 +40,9 @@ public class SkuController {
      */
     @GetMapping(value = "/list")
     public String search(@RequestParam(required = false) Map searchMap, Model model, HttpServletRequest httpServletRequest) {
+        // 转译特殊字符
+        setSearchMapSpecValue(searchMap);
+
         Map resultMap = skuFeign.search(searchMap);
         model.addAttribute("result", resultMap);
         model.addAttribute("searchMap", searchMap);
@@ -56,7 +71,11 @@ public class SkuController {
             for (String key : parameterMap.keySet()) {
                 String value = parameterMap.get(key)[0];
 
-                if(key.equalsIgnoreCase("pageNum")){
+                if (key.startsWith("spec_")) {
+                    value = value.replace("+", "%2B");
+                }
+
+                if (key.equalsIgnoreCase("pageNum")) {
                     continue;
                 }
 
