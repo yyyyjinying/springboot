@@ -160,11 +160,12 @@ public class SkuServiceImpl implements SkuService {
 
             // 价格筛选
             String price = searchMap.get("price");
+
             if (!StringUtils.isEmpty(price)) {
 
                 price = price.replace("元", "").replace("以上", "");
 
-                String[] prices = price.split("_"); // 必须是下划线'_'
+                String[] prices = price.split("-"); // 必须是下划线'_'
                 boolQueryBuilder.must(QueryBuilders.rangeQuery("price").gt(Integer.parseInt(prices[0])));
                 if (prices.length > 1) {
                     boolQueryBuilder.must(QueryBuilders.rangeQuery("price").lte(Integer.parseInt(prices[1])));
