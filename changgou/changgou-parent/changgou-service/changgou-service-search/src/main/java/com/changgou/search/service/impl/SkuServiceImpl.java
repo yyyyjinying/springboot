@@ -272,8 +272,14 @@ public class SkuServiceImpl implements SkuService {
 
         Map<String, Object> resultMap = new HashMap<>();
 
+        Pageable pageable = skuPage.getPageable();
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+
         resultMap.put("rows", skuPage.getContent());
         resultMap.put("total", skuPage.getTotalElements());
+        resultMap.put("pageNumber", pageNumber);
+        resultMap.put("pageSize", pageSize);
         resultMap.put("totalPages", skuPage.getTotalPages());
         resultMap.putAll(getGroupList(nativeSearchQueryBuilder, searchMap));
 

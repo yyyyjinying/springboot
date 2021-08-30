@@ -1,6 +1,8 @@
 package com.changgou.search.controller;
 
 import com.changgou.search.feign.SkuFeign;
+import com.changgou.search.pojo.SkuInfo;
+import entity.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,14 @@ public class SkuController {
         String[] url = url(httpServletRequest);
         model.addAttribute("url", url[0]);
         model.addAttribute("sortUrl", url[1]);
+
+        // 设置分页
+        long total = Long.parseLong(resultMap.get("total").toString());
+        int pageNumber = Integer.parseInt(resultMap.get("pageNumber").toString()) + 1;
+        int pageSize = Integer.parseInt(resultMap.get("pageSize").toString());
+        Page<SkuInfo> pageInfo = new Page<>(total, pageNumber, pageSize);
+        model.addAttribute("pageInfo", pageInfo);
+
         return "search";
     }
 
@@ -46,6 +56,10 @@ public class SkuController {
             for (String key : parameterMap.keySet()) {
                 String value = parameterMap.get(key)[0];
 
+                if(key.equalsIgnoreCase("pageNum")){
+                    continue;
+                }
+
                 url.append(key).append("=").append(value).append("&");
                 // sort取最新的值
                 if (key.equalsIgnoreCase("sortField") || key.equalsIgnoreCase("sortRule")) {
@@ -59,7 +73,7 @@ public class SkuController {
                     sortUrl.substring(0, sortUrl.length() - 1)
             };
         }
-        return new String[]{strurl,strurl};
+        return new String[]{strurl, strurl};
     }
 }
 
