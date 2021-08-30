@@ -5,9 +5,29 @@ spring:
     gateway:
       routes:
             - id: changgou_goods_route
-              uri: http://localhost:18081
+#              uri: http://localhost:18081
+              uri: lb://goods  # 所有请求都交给goods服务器  可以实现负载均衡
               predicates:
-              - Host=cloud.itheima.com**
+#              - Host=cloud.itheima.com**
+#              - Path=/brand/**
+#              - Path=/**
+              - Path=/api/brand/**
+              filters:
+              #- PrefixPath=/brand # 在所有的路径上添加 /brand
+              - StripPrefix=1  # 反问路径去掉一个路径：1 ，2
+#              - PrefixPath=/brand
+
+              #redis-rate-limiter.replenishRate是您希望允许用户每秒执行多少请求，而不会丢弃任何请求。这是令牌桶填充的速率
+              #redis-rate-limiter.burstCapacity是指令牌桶的容量，允许在一秒钟内完成的最大请求数,将此值设置为零将阻止所有请求。
+              #key-resolver: “#{@ipKeyResolver}” 用于通过SPEL表达式来指定使用哪一个KeyResolver.
+              #如上配置：
+                #表示 一秒内，允许 一个请求通过，令牌桶的填充速率也是一秒钟添加一个令牌。
+                #最大突发状况 也只允许 一秒内有一次请求，可以根据业务来调整 。
+              - name: RequestRateLimiter #请求数限流 名字不能随便写 ，使用默认的facatory
+                args:
+                  key-resolver: "#{@ipKeyResolver}"
+                  redis-rate-limiter.replenishRate: 1
+                  redis-rate-limiter.burstCapacity: 1
 
       globalcors:
         cors-configurations:
