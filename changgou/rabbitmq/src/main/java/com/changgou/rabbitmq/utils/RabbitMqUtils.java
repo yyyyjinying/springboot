@@ -11,7 +11,7 @@ public class RabbitMqUtils {
     public static Channel getChannel() throws IOException, TimeoutException {
         // 创建连接工厂
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("172.16.147.164"); // 172.16.147.159
+        connectionFactory.setHost("172.16.147.164"); // http://172.16.147.164:15672/#/
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
         Connection connection = connectionFactory.newConnection();
