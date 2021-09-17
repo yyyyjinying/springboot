@@ -15,6 +15,7 @@ public class TtlQueueConfig {
     public static final String X_EXCHANGE = "X";
     public static final String QUEUE_A = "QA";
     public static final String QUEUE_B = "QB";
+    public static final String QUEUE_C = "QC";
     public static final String Y_DEAD_LETTER_EXCHANGE = "Y";
     public static final String DEAD_LETTER_QUEUE = "QD";
 
@@ -63,11 +64,27 @@ public class TtlQueueConfig {
         return QueueBuilder.durable(QUEUE_B).withArguments(args).build();
     }
 
+
     //声明队列 B 绑定 X 交换机
     @Bean
     public Binding queuebBindingX(@Qualifier("queueB") Queue queue1B,
                                   @Qualifier("xExchange") DirectExchange xExchange) {
         return BindingBuilder.bind(queue1B).to(xExchange).with("XB");
+    }
+
+    // 声明死信队列
+    @Bean("queueC")
+    public Queue queueC() {
+        HashMap<String, Object> args = new HashMap<>(2);
+        args.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
+        args.put("x-dead-letter-routing-key", "YD");
+        return QueueBuilder.durable(QUEUE_C).withArguments(args).build();
+    }
+
+    // 队列与交换机进行绑定
+    @Bean
+    public Binding queuecBindingX(@Qualifier("queueC") Queue queueC, @Qualifier("xExchange") DirectExchange xExchange){
+        return BindingBuilder.bind(queueC).to(xExchange).with("XC");
     }
 
     //声明死信队列 QD
