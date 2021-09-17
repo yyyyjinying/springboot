@@ -1,5 +1,6 @@
 package com.changgou.springbootrabbitmq.controller;
 
+import com.changgou.springbootrabbitmq.config.DelayedQueueConfig;
 import com.changgou.springbootrabbitmq.config.TtlQueueConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,25 +21,43 @@ public class SendMsgController {
     RabbitTemplate rabbitTemplate;
 
     @GetMapping("/sendMsg/{message}")
-    public void sendMsg(@PathVariable("message") String message){
+    public void sendMsg(@PathVariable("message") String message) {
         log.info("当前时间：{},发送一条信息给两个 TTL 队列:{}", new Date(), message);
-        rabbitTemplate.convertAndSend("X", "XA", "消息来自 ttl 为 10S 的队列: "+message);
-        rabbitTemplate.convertAndSend("X", "XB", "消息来自 ttl 为 40S 的队列: "+message);
+        rabbitTemplate.convertAndSend("X", "XA", "消息来自 ttl 为 10S 的队列: " + message);
+        rabbitTemplate.convertAndSend("X", "XB", "消息来自 ttl 为 40S 的队列: " + message);
 
     }
 
     /**
-     *  http://localhost:8080/ttl/sendExpirationMsg/你好 1/2000
-     *  http://localhost:8080/ttl/sendExpirationMsg/你好 2/200
+     * http://localhost:8080/ttl/sendExpirationMsg/你好 1/2000
+     * http://localhost:8080/ttl/sendExpirationMsg/你好 2/200
+     *
      * @param message
      * @param ttlTime
      */
     @GetMapping("/sendExpirationMsg/{message}/{ttlTime}")
-    public void sendMsg(@PathVariable("message") String message, @PathVariable("ttlTime") String ttlTime){
+    public void sendMsg(@PathVariable("message") String message, @PathVariable("ttlTime") String ttlTime) {
         log.info("当前时间：{},发送一条信息给expiration队列:{},时间间隔：{}", new Date(), message, ttlTime);
-        rabbitTemplate.convertAndSend(TtlQueueConfig.X_EXCHANGE,TtlQueueConfig.QUEUE_C,message, megs->{
+        rabbitTemplate.convertAndSend(TtlQueueConfig.X_EXCHANGE, TtlQueueConfig.QUEUE_C, message, megs -> {
             megs.getMessageProperties().setExpiration(ttlTime);
             return megs;
         });
     }
+
+    /**
+     * http://localhost:8080/ttl/sendDelayMsg/come on baby1/20000
+     * http://localhost:8080/ttl/sendDelayMsg/come on baby2/2000
+     * @param message
+     * @param deayTime
+     */
+    @GetMapping("sendDelayMsg/{message}/{delayTime}")
+    public void sendMsg(@PathVariable("message") String message, @PathVariable("delayTime") Integer deayTime) {
+        log.info("当前时间：{},发送一条信息给delayed队列:{},时间间隔：{}", new Date(), message, deayTime);
+        rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE_NAME, DelayedQueueConfig.DELAYED_ROUTING_KEY, message, megs -> {
+            megs.getMessageProperties().setDelay(deayTime);
+            return megs;
+        });
+
+    }
 }
+

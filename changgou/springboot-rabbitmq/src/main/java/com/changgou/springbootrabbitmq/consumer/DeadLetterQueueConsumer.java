@@ -1,5 +1,6 @@
 package com.changgou.springbootrabbitmq.consumer;
 
+import com.changgou.springbootrabbitmq.config.DelayedQueueConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -17,5 +18,11 @@ public class DeadLetterQueueConsumer {
     public void receiveD(Message message, Channel channel) throws IOException {
         String msg = new String(message.getBody());
         log.info("当前时间：{},收到死信队列信息{}", new Date().toString(), msg);
+    }
+
+    @RabbitListener(queues = DelayedQueueConfig.DELAYED_QUEUE_NAME)
+    public void receiveDelayedQueue(Message message, Channel channel) throws Exception{
+        String msg = new String(message.getBody());
+        log.info("当前时间：{},收到Delayed队列信息{}", new Date().toString(), msg);
     }
 }
