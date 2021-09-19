@@ -24,12 +24,13 @@ public class ProducerController {
     public void sendMessage(@PathVariable String message) {
 
         CorrelationData correlationData = new CorrelationData("1");
+        CorrelationData correlationDataExpetion = new CorrelationData("2");
 
 
+        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
         // 队列异常
-        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY+"123",message, correlationData);
+        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY+"123",message, correlationDataExpetion);
         // 制造交换机异常
-//        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME+"123",ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
 //        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
 
         log.info("发送消息内容:{}",message);
