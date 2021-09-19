@@ -14,17 +14,28 @@ public class ConfirmConfig {
     public static final String BACKUP_QUEUE_NAME = "backup.queue";
     public static final String WARNING_QUEUE_NAME = "warning.queue";
 
-    //声明业务 Exchange
-    @Bean("confirmExchange")
-    public DirectExchange confirmExchange() {
-        return new DirectExchange(CONFIRM_EXCHANGE_NAME);
-    }
+//    //声明业务 Exchange
+//    @Bean("confirmExchange")
+//    public DirectExchange confirmExchange() {
+//        return new DirectExchange(CONFIRM_EXCHANGE_NAME);
+//    }
 
 
-    // 声明队列
+    // 声明确认队列
     @Bean("confirmQueue")
     public Queue confirmQueue() {
         return QueueBuilder.durable(CONFIRM_QUEUE_NAME).build();
+    }
+
+    //声明确认 Exchange 交换机的备份交换机
+    @Bean("confirmExchange")
+    public DirectExchange confirmExchange() {
+        ExchangeBuilder exchangeBuilder =
+                ExchangeBuilder.directExchange(CONFIRM_EXCHANGE_NAME)
+                        .durable(true)
+//设置该交换机的备份交换机
+                        .withArgument("alternate-exchange", BACKUP_EXCHANGE_NAME);
+        return (DirectExchange) exchangeBuilder.build();
     }
 
     // 声明确认队列绑定关系

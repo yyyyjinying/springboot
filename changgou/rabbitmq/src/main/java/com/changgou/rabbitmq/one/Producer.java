@@ -1,10 +1,12 @@
 package com.changgou.rabbitmq.one;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
 public class Producer {
@@ -16,20 +18,39 @@ public class Producer {
         ConnectionFactory factory = new ConnectionFactory();
 
         // 工厂IP 连接Rabbitmq的队列
-        factory.setHost("172.16.147.159");
-        factory.setUsername("guest");
-        factory.setPassword("guest");
+        factory.setHost("172.16.147.175");
+        factory.setUsername("admin");
+        factory.setPassword("admin");
 
         // 建立联机
         Connection connection = factory.newConnection();
         // 创建信道
         Channel channel = connection.createChannel();
-        // 创建队列
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
-        String message = "hello world0";
 
-        // 发送消息
-        channel.basicPublish("",QUEUE_NAME,null,message.getBytes());
+
+        /**
+         * 配置优先级队列
+         */
+        HashMap<String, Object> argments = new HashMap<>();
+        argments.put("x-max-priority", 10);
+
+
+        // 创建队列
+        channel.queueDeclare(QUEUE_NAME,true,false,false,argments);
+//        String message = "hello world0";
+
+        for (int i = 0; i < 11 ; i++) {
+            String message = "message" + i;
+
+            if (i==5) {
+                AMQP.BasicProperties properties = new AMQP.BasicProperties().builder().priority(5).build();
+                channel.basicPublish("",QUEUE_NAME, properties ,message.getBytes());
+            }else{
+                // 发送消息
+                channel.basicPublish("",QUEUE_NAME,null,message.getBytes());
+            }
+        }
+
         System.out.println("消息发送完毕！");
 
 
