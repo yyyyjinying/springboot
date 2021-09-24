@@ -14,7 +14,7 @@ public class Consumer {
         ConnectionFactory factory = new ConnectionFactory();
 
         // 工厂IP 连接Rabbitmq的队列
-        factory.setHost("172.16.147.175");
+        factory.setHost("172.16.147.181");
         factory.setUsername("admin");
         factory.setPassword("admin");
 
