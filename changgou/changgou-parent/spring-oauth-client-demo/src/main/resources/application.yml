@@ -1,0 +1,42 @@
+server:
+  port: 8051
+  servlet:
+    session:
+      cookie:
+        # 防止Cookie冲突，冲突会导致登录验证不通过
+        name: OAUTH2-CLIENT-SESSIONID01
+spring:
+  application:
+    name: demosoauth
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+#    url: jdbc:mysql://192.168.211.132:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: 172.16.147.181
+    port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+
+# 授权服务器地址
+oauth2-server-url: http://localhost:8015
+# 与授权服务器的对应配置
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: 112233
+      user-authorization-uri: ${oauth2-server-url}/oauth/authorize
+      access-token-uri: ${oauth2-server-url}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${oauth2-server-url}/oauth/token_key

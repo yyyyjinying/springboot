@@ -21,6 +21,8 @@
         <module>changgou-common</module>
         <module>changgou-common-db</module>
         <module>changgou-user-oauth</module>
+        <module>spring-oauth-demo</module>
+        <module>spring-oauth-client-demo</module>
     </modules>
 
 
