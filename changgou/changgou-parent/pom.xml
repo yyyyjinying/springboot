@@ -23,6 +23,7 @@
         <module>changgou-user-oauth</module>
         <module>spring-oauth-demo</module>
         <module>spring-oauth-client-demo</module>
+        <module>changgou-security</module>
     </modules>
 
 
