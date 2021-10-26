@@ -3,12 +3,259 @@
 <head>
     <title>Thymeleaf的入门</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        html {
+            height: 100%;
+            background: #ebf1f7;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .perview h1, .perview p, .perview h4, .perview ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .perview {
+            box-sizing: border-box;
+            height: 100%;
+            padding: 32px;
+            font-size: 14px;
+        }
+
+        .perview h1 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0b2159;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .perview .main {
+            padding: 0 24px 24px 24px;
+            background: #fff;
+        }
+
+        .perview .main .title {
+            padding: 20px 0;
+            color: #273756;
+        }
+
+        .perview .main .title p {
+            margin-bottom: 16px;
+
+        }
+
+        .perview .main .title p label {
+            font-weight: bold;
+        }
+
+        .perview .main .title .base-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        .perview .main .title .base-info span {
+            margin-left: 25px;
+        }
+
+        .perview .main .title .base-info span i {
+            font-style: normal;
+        }
+
+        /*表格*/
+        .perview .main-table {
+            border: 1px solid #e6ecf2;
+            border-collapse: collapse;
+            color: #273756;
+        }
+
+        .perview .main-table th {
+            border-right: 1px solid #e6ecf2;
+            border-bottom: 1px solid #e6ecf2;
+        }
+
+        .perview .main-table td {
+            border-right: 1px solid #e6ecf2;
+            border-bottom: 1px solid #e6ecf2;
+        }
+
+        .perview .main-table thead {
+            background: #edf2f8;
+            white-space: nowrap;
+            color: #60769c;
+            font-weight: bold;
+        }
+
+        .perview .main-table thead th {
+            padding: 10px 16px;
+        }
+
+        .perview .main-table tbody {
+        }
+
+        .perview .main-table tbody td {
+            padding: 8px 16px;
+        }
+
+        .perview .main-table tbody td.warning-back {
+            padding: 8px 0px;
+        }
+
+        .perview .main-table tbody td.warning-back > div {
+            padding: 0 16px;
+
+        }
+
+        .perview .main-table tbody td.num {
+            text-align: center;
+
+        }
+
+        .perview .main-table tbody td .h-tip {
+            font-weight: normal;
+
+        }
+
+        .perview .main-table tbody td .table-line {
+            margin: 8px 0;
+            border-bottom: 1px solid #e6ecf2;
+        }
+
+        .perview .main-table {
+        }
+
+        .perview .main-table {
+        }
+
+        .perview .main-table {
+        }
+
+        .perview .main-table {
+        }
+
+
+    </style>
 </head>
 <body>
-<!--输出hello数据-->
-<span>hello-</span><p th:text="${message}"></p>
-<form id="login-form" th:action="@{/test/hello}">
-    <button>提交</button>
-</form>
+<div class="perview">
+    <h1>交易对手风险检测报告 2021-09-26</h1>
+    <div class="main">
+        <div class="title">
+            <p><label>摘要主题&nbsp;:&nbsp;</label>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案</p>
+            <p><label>摘要内容&nbsp;:&nbsp;</label>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案</p>
+            <div class="base-info">
+                <span><i>报告日期&nbsp;:&nbsp;</i>2021-09-26</span>
+                <span><i>报告编辑人&nbsp;:&nbsp;</i>蒋明</span>
+            </div>
+        </div>
+        <table class="main-table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th align="left">公司名称</th>
+                <th align="left">预警级别</th>
+                <th align="left">预警标签</th>
+                <th>预警状态</th>
+                <th align="left">预警事项/反馈</th>
+                <th width="80">日期</th>
+                <th width="60">分析师</th>
+                <th width="60">负责任</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="num">1</td>
+                <td>招商银行蛇口工业控股股份有限公司</td>
+                <td>
+                    <div class="preview-tag">
+                        <img src=""/>
+                        <span>三级预警</span>
+                    </div>
+                </td>
+                <td>表外负债较高</td>
+                <td>
+                    <div class="preview-status">
+                        <i></i>
+                        <span>生效中</span>
+                    </div>
+                </td>
+                <td class="warning-back">
+                    <div>
+                        此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案
+                    </div>
+                    <div class="table-line"></div>
+                    <div>
+                        <h4>【反馈】：<span class="h-tip">未反馈</span></h4>
+                        <ul>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                        </ul>
+                    </div>
+
+                </td>
+                <td align="center">
+                    2021-08-17
+                </td>
+                <td align="center">
+                    龙萧
+                </td>
+                <td align="center">
+                    周点点
+                </td>
+            </tr>
+            <tr>
+                <td class="num">2</td>
+                <td>招商银行蛇口工业控股股份有限公司</td>
+                <td>
+                    <div class="preview-tag">
+                        <img src=""/>
+                        <span>三级预警</span>
+                    </div>
+                </td>
+                <td>表外负债较高</td>
+                <td>
+                    <div class="preview-status">
+                        <i></i>
+                        <span>生效中</span>
+                    </div>
+                </td>
+                <td class="warning-back">
+                    <div>
+                        此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案
+                    </div>
+                    <div class="table-line"></div>
+                    <div>
+                        <h4>【反馈】：<span class="h-tip">未反馈</span></h4>
+                        <ul>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                            <li>此处是文案此处是文案此处是文案此处是文案此处是文案此处是文案此处是</li>
+                        </ul>
+                    </div>
+
+                </td>
+                <td>
+                    2021-08-17
+                </td>
+                <td>
+                    龙萧
+                </td>
+                <td>
+                    周点点
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 </body>
 </html>
