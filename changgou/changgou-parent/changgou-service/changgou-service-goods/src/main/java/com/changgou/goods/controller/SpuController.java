@@ -161,6 +161,20 @@ public class SpuController {
         return new Result<Spu>(true,StatusCode.OK,"查询成功",map);
     }
 
+
+    /**
+     * 通过ID请求单条spu数据
+     * @param id
+     * @return
+     */
+    @GetMapping("/spuid/{id}")
+    public Result<Spu> getId(@PathVariable Long id){
+        Spu spu = spuService.findById(id);
+        return new Result<Spu>(true, StatusCode.OK, "请求成功", spu);
+    }
+
+
+
     /***
      * 查询Spu全部数据
      * @return

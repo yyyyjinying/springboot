@@ -175,6 +175,17 @@ public class SkuController {
         return new Result<Map<String, Object>>(true,StatusCode.OK,"查询成功",map);
     }
 
+    /**
+     * 查询sku单条数据
+     * @param id
+     * @return
+     */
+    @GetMapping("/id/{id}")
+    public Result<Sku> getId(@PathVariable String id){
+        Sku sku = skuService.findById(id);
+        return new Result<Sku>(true, StatusCode.OK, "查询成功", sku);
+    }
+
     /***
      * 查询Sku全部数据
      * @return

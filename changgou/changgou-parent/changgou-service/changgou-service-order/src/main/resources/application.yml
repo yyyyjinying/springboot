@@ -1,0 +1,34 @@
+server:
+  port: 18090
+spring:
+  application:
+    name: order
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/changgou_orders?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: 123456
+  redis:
+    host: 172.16.147.183
+    port: 6379
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#打印日志
+logging:
+  level:
+   com.changgou: debug
+#mybatis的配置 可以不配置  需要整合通用mapper
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+#    map-underscore-to-camel-case: true
+#  type-aliases-package: com.changgou.goods.pojo
