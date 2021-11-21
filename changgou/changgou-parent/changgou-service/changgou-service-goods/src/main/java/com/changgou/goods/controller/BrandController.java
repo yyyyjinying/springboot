@@ -123,6 +123,28 @@ public class BrandController {
         return new Result<Brand>(true,StatusCode.OK,"查询成功",brand);
     }
 
+
+    /**
+     * 测试用
+     * @param id
+     * @return
+     */
+    @GetMapping("/feign/{id}")
+    public Result<Brand> findBrandById(@PathVariable("id") Integer id){
+        //调用BrandService实现根据主键查询Brand
+
+        try {
+            System.out.println(System.currentTimeMillis());
+            Thread.sleep(2);
+            System.out.println("3000"+System.currentTimeMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Brand brand = brandService.findById(id);
+        return new Result<Brand>(true,StatusCode.OK,"查询成功",brand);
+
+    }
+
     /***
      * 查询Brand全部数据
      * @return

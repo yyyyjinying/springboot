@@ -1,15 +1,13 @@
 package com.changgou.order.controller;
 
+import com.changgou.goods.pojo.Brand;
 import com.changgou.order.pojo.OrderItem;
 import com.changgou.order.service.CartService;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,15 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    /**
+     * 测试feign
+     */
+    @GetMapping("/brand/{id}")
+    public Result<Brand> findBrandById(@PathVariable("id") Integer id){
+        Brand brandById = cartService.findBrandById(id);
+        return new Result<Brand>(true, StatusCode.OK, "测试feign",brandById);
+    }
 
     /***
      * 加入购物车

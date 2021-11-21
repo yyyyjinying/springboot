@@ -22,9 +22,13 @@ feign:
   hystrix:
     enabled: true
 #打印日志
+#logging:
+#  level:
+#   com.changgou: debug
 logging:
   level:
-   com.changgou: debug
+    com.changgou: debug
+
 #mybatis的配置 可以不配置  需要整合通用mapper
 mybatis:
 #  configuration:

@@ -1,6 +1,8 @@
 package com.changgou.order.service.impl;
+import com.changgou.goods.feign.BrandFeign;
 import com.changgou.goods.feign.SkuFeign;
 import com.changgou.goods.feign.SpuFeign;
+import com.changgou.goods.pojo.Brand;
 import com.changgou.goods.pojo.Sku;
 import com.changgou.goods.pojo.Spu;
 import com.changgou.order.pojo.OrderItem;
@@ -25,6 +27,22 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private SpuFeign spuFeign;
 
+    @Autowired
+    private BrandFeign brandFeign;
+
+
+    /**
+     * 测试feign
+     * @param id
+     * @return
+     */
+    @Override
+    public Brand findBrandById(Integer id){
+        Result<Brand> byId = brandFeign.findBrandById(id);
+        return byId.getData();
+
+    }
+
     @Override
     public List<OrderItem> list(String username) {
         List<OrderItem> list = redisTemplate.boundHashOps("Cart_" + username).values();
@@ -40,6 +58,15 @@ public class CartServiceImpl implements CartService {
     @Override
     public void add(Integer num, String id, String username) {
 
+        if(num <= 0){
+            redisTemplate.boundHashOps("Cart_"+username).delete(id);
+            Long size = redisTemplate.boundHashOps("Cart_" + username).size();
+            if(size == null || size <=0){
+                redisTemplate.delete("Cart_"+username);
+            }
+
+            return;
+        }
         // 设置OrderItem
 
         // 1.获取对应的fe分类

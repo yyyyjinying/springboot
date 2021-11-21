@@ -23,10 +23,15 @@ eureka:
 feign:
   hystrix:
     enabled: true
+ribbon:
+  ReadTimeout: 4000   #负载均衡超时时间，默认值5000
+  ConnectTimeout: 4000 #ribbon请求连接的超时时间，默认值2000
+
 #打印日志
 logging:
   level:
-   com.changgou: debug
+    com.changgou: debug
+#    com.changgou: debug
 #mybatis的配置 可以不配置  需要整合通用mapper
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
