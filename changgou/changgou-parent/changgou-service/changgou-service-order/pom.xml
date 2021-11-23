@@ -47,6 +47,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>2.0.5.RELEASE</version>
         </dependency>
+        <!--豪猪 服务降级 服务熔断 服务限流-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-hystrix</artifactId>
+            <version>2.1.1.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>com.changgou</groupId>
             <artifactId>changgou-service-goods-api</artifactId>

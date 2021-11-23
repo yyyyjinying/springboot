@@ -1,0 +1,25 @@
+server:
+  port: 18041
+spring:
+  application:
+    name: spring-cloud-config-client-test01
+  cloud:
+    config:
+      name: config # 配置文件名称
+      label: main # 分支
+      profile: dev
+      uri: http://localhost:18040 # 配置中心地址 /main/config-dev.yml
+# 服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+aa:
+  bb: bb
+#management:
+#  endpoint:
+#    gateway:
+#      enabled: true
+#    web:
+#      exposure:
+#        include: true

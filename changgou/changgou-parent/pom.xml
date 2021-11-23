@@ -24,6 +24,12 @@
         <module>spring-oauth-demo</module>
         <module>spring-oauth-client-demo</module>
         <module>changgou-security</module>
+        <module>spring-cloud-test</module>
+        <module>spring-cloud-test</module>
+        <module>spring-cloud-test-01</module>
+        <module>spring-cloud-gateway-test</module>
+        <module>spring-cloud-config-center-test</module>
+        <module>spring-cloud-config-client-test01</module>
     </modules>
 
 
@@ -47,6 +53,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!--fastjson-->
@@ -73,6 +83,13 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
+        </dependency>
+
+        <!--国产工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.6.5</version>
         </dependency>
 
         <!--

@@ -1,0 +1,72 @@
+server:
+  port: 18050
+spring:
+  application:
+    name: spring-cloud-gateway-test
+  cloud:
+    gateway: # 网关可以将真实的域名端口隐藏起来了
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      routes:
+            - id: route_id_01  # 路由ID，没有固定规则，但必须唯一， 建议配合服务名
+#              uri: localhost:18060  # 匹配成功后，提供服务的路由地址
+              uri: lb://CLOUD-TEST # 匹配注册中心的服务的路由地址 前提必须开启locator.enabled:true
+              predicates: # 断言 匹配路径进行路由
+                - Path=/feign/**
+            - id: route_id_02
+#              uri: localhost:18061
+              uri: lb://CLOUD-TEST-01
+              predicates:
+                - Path=/hystrix/**
+#                - After=2021-11-22T19:48:34.680+08:00[Asia/Shanghai]
+#                - Cookie=username,zzyy # curl http://localhost:18050/hystrix/ok/1 --cookie username=zzyy
+#                - Header=X-Request-Id,\d+ # curl http://localhost:18050/hystrix/ok/1  -H "X-Request-Id:12"   请求头要有X-Request-Id 属性并且值为整数的正则表达式
+#              filters:
+#              #- PrefixPath=/brand # 在所有的路径上添加 /brand
+#              - StripPrefix=1  # 反问路径去掉一个路径：1 ，2
+##              - PrefixPath=/brand
+
+              #redis-rate-limiter.replenishRate是您希望允许用户每秒执行多少请求，而不会丢弃任何请求。这是令牌桶填充的速率
+              #redis-rate-limiter.burstCapacity是指令牌桶的容量，允许在一秒钟内完成的最大请求数,将此值设置为零将阻止所有请求。
+              #key-resolver: “#{@ipKeyResolver}” 用于通过SPEL表达式来指定使用哪一个KeyResolver.
+              #如上配置：
+                #表示 一秒内，允许 一个请求通过，令牌桶的填充速率也是一秒钟添加一个令牌。
+                #最大突发状况 也只允许 一秒内有一次请求，可以根据业务来调整 。
+#              - name: RequestRateLimiter #请求数限流 名字不能随便写 ，使用默认的facatory
+#                args:
+#                  key-resolver: "#{@ipKeyResolver}"
+#                  redis-rate-limiter.replenishRate: 1
+#                  redis-rate-limiter.burstCapacity: 1
+#            #用户微服务
+#            - id: changgou_user_route
+#              uri: lb://user
+#              predicates:
+#              - Path=/api/user/**,/api/address/**,/api/areas/**,/api/cities/**,/api/provinces/**
+#              filters:
+#              - StripPrefix=1
+
+
+#      globalcors:
+#        cors-configurations:
+#          '[/**]': # 匹配所有请求
+#              allowedOrigins: "*" #跨域处理 允许所有的域
+#              allowedMethods: # 支持的方法
+#                - GET
+#                - POST
+#                - PUT
+#                - DELETE
+
+eureka:
+  instance:
+    hostname: spring-cloud-gateway-test
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+#management:
+#  endpoint:
+#    gateway:
+#      enabled: true
+#    web:
+#      exposure:
+#        include: true
