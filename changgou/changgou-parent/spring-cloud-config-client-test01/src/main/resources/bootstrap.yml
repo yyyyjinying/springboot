@@ -13,7 +13,7 @@ spring:
       name: config # 配置文件名称
       label: main # 分支
       profile: dev
-      uri: http://localhost:18040 # 配置中心地址 /main/config-dev.yml
+      uri: http://localhost:18040 # 配置中心地址 必须先启动1840端口服务 依赖关系/main/config-dev.yml
 # 服务注册到eureka地址
 eureka:
   client:
