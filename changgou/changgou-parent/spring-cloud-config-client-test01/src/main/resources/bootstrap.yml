@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: spring-cloud-config-client-test01
+  rabbitmq:
+    host: 172.16.147.183 # 虚拟机的IP
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     config:
       name: config # 配置文件名称
@@ -14,12 +19,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka
-aa:
-  bb: bb
-#management:
-#  endpoint:
-#    gateway:
-#      enabled: true
-#    web:
-#      exposure:
-#        include: true
+# 暴露监控断点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -12,7 +12,12 @@ spring:
             - spring-cloud-config # 指定仓库
           username: yyyyjinying
           password: Jinying3818
-      label: main # 指定分支
+      label: main
+  rabbitmq:
+    host: 172.16.147.183 # 虚拟机IP
+    port: 5672
+    username: guest
+    password: guest
       # http://localhost:18040/config/dev/main
       # http://localhost:18040/main/config-dev.yml
 
@@ -21,10 +26,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka
-#management:
-#  endpoint:
-#    gateway:
-#      enabled: true
-#    web:
-#      exposure:
-#        include: true
+
+#management: # rabbitmq相关配置，暴露bus刷新配置的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "bus-refresh"  # curl -X POST "http://localhost:18040/actuator/bus-refresh"
