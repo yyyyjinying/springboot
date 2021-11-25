@@ -30,7 +30,6 @@
         <module>spring-cloud-gateway-test</module>
         <module>spring-cloud-config-center-test</module>
         <module>spring-cloud-config-client-test01</module>
-        <module>spring-cloud-stream-test</module>
         <module>spring-cloud-stream</module>
         <module>spring-cloud-stream-receive</module>
         <module>spring-cloud-stream-receive-02</module>
