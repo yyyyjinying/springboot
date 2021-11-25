@@ -1,5 +1,5 @@
 server:
-  port: 18031
+  port: 18032
 spring:
   application:
     name: spring-cloud-stream-receive
