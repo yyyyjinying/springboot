@@ -14,6 +14,8 @@ public class ConfigClientController {
 
     @GetMapping("/info")
     public String getConfigInfo(){
+
+        System.out.println(222);
         return info;
     }
 }

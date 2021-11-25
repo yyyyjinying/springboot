@@ -14,10 +14,10 @@ spring:
           password: Jinying3818
       label: main
   rabbitmq:
-    host: 172.16.147.183 # 虚拟机IP
+    host: 172.16.147.184 # 虚拟机IP
     port: 5672
-    username: guest
-    password: guest
+    username: mm
+    password: 123456
       # http://localhost:18040/config/dev/main
       # http://localhost:18040/main/config-dev.yml
 

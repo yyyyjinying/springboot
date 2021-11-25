@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>博客游客注册</title>
+     
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">-->
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+</head>
+<body>
+<br><br><br>
+<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+    <div class="ui container">
+        <div class="ui middle aligned center aligned grid">
+
+            <div class="column">
+                <div class="ui negative message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        校验失败
+                    </div>
+                    <p th:text="${message}"></p>
+                </div>
+                <h2 class="ui teal image header">
+                    <div class="content">
+                        游客注册
+                    </div>
+                </h2>
+                <form class="ui large form" method="post" action="#" th:action="@{/register}">
+                    <div class="ui segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" id="username" name="username" placeholder="用户名"
+                                       onchange="isUsernameUnique(this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="密码">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" id="email" placeholder="邮箱">
+                                <input type="button" id="getcode" class="ui grey label" value="获取验证码">
+                            </div>
+
+                        </div>
+                        <div class="code field">
+                            <div class="ui left icon input">
+                                <i class="check square outline icon"></i>
+                                <input type="text" name="identify" id="identify" placeholder="验证码">
+                            </div>
+                        </div>
+                        <button class="ui fluid large teal submit button" id="register-btn">注 册</button>
+                    </div>
+                    <div id="isRepeat"></div>
+                    <div class="ui error mini message"></div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" th:href="@{/js/jquery.cookie.js}"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>-->
+<script>
+    $('#getcode').click(function () {
+
+        //发送验证码
+        var email = $("#email").val();
+        if (email == "") {
+            return;
+        }
+        alert("验证码已发送，请及时查看你的邮箱");
+        $(".code").toggle();
+        //ajax实现后台邮箱的发送
+        $.ajax({
+            //url路径
+            url: "http://localhost:18060/sendEmail",
+            //data请求数据
+            data: {"email": email},
+            //dataType json
+            type: "post",
+            //回调函数
+            success: function (data) {
+                //回调函数 data 返回流
+                if (data == "failure") {
+                    alert("发送失败");
+                }
+                else if (data == "false") {
+                    alert("目标邮箱不存在，请检查你的邮箱是否正确");
+                }
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>
