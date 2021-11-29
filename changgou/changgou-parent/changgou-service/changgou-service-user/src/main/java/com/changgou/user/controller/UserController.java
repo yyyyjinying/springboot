@@ -33,6 +33,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping(value = "/testLogin/{username}")
+    public User testLogin(@PathVariable("username") String username) {
+        User userInfo = userService.findById(username);
+        return userInfo;
+    }
+
 
     @GetMapping(value = "login")
     public Result login(String username, String password, HttpServletResponse response) {
@@ -40,18 +46,18 @@ public class UserController {
 
         if (BCrypt.checkpw(password, user.getPassword())) {
             //设置令牌信息
-            Map<String,Object> info = new HashMap<String,Object>();
-            info.put("role","USER");
-            info.put("success","SUCCESS");
-            info.put("username",username);
+            Map<String, Object> info = new HashMap<String, Object>();
+            info.put("role", "USER");
+            info.put("success", "SUCCESS");
+            info.put("username", username);
             //生成令牌
-            String jwt = JwtUtil.createJWT(UUID.randomUUID().toString(), JSON.toJSONString(info),null);
+            String jwt = JwtUtil.createJWT(UUID.randomUUID().toString(), JSON.toJSONString(info), null);
 
             // 添加cookie
             Cookie cookie = new Cookie("Authorization", jwt);
             response.addCookie(cookie);
 
-            return new Result(true,StatusCode.OK,"登录成功！",jwt);
+            return new Result(true, StatusCode.OK, "登录成功！", jwt);
 //            return new Result(true, StatusCode.OK, "登录成功", user);
 
         }

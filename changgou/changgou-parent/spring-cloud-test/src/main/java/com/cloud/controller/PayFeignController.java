@@ -1,8 +1,10 @@
 package com.cloud.controller;
 
 import com.changgou.goods.pojo.Brand;
+import com.changgou.user.pojo.User;
 import com.cloud.service.PayFeignService;
 import com.cloud.service.PayHystrixService;
+import com.cloud.service.UserFeign;
 import entity.Result;
 import entity.StatusCode;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,17 @@ public class PayFeignController {
     PayFeignService payFeignService;
 
     @Autowired
+    private UserFeign userFeign;
+
+    @Autowired
     PayHystrixService payHystrixService;
+
+    @GetMapping("/user/{username}")
+    public User testLogin(){
+        User admin = userFeign.testLogin("admin");
+        System.out.println(admin.toString());
+        return admin;
+    }
 
     @GetMapping("/find/{id}")
     public Result<Brand> findId(@PathVariable("id") Integer id){
