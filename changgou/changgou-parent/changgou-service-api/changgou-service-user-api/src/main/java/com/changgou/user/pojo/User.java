@@ -75,7 +75,13 @@ public class User implements Serializable{
     @Column(name = "last_login_time")
 	private Date lastLoginTime;//最后登录时间
 
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
 
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
 
 	//get方法
 	public String getUsername() {
@@ -249,14 +255,14 @@ public class User implements Serializable{
 		this.birthday = birthday;
 	}
 	//get方法
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+//	public Date getLastLoginTime() {
+//		return lastLoginTime;
+//	}
 
 	//set方法
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+//	public void setLastLoginTime(Date lastLoginTime) {
+//		this.lastLoginTime = lastLoginTime;
+//	}
 
 
 }

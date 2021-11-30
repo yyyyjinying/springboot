@@ -1,12 +1,15 @@
 package com.changgou.user.service.impl;
 
 import com.changgou.user.dao.PermissionMapper;
+import com.changgou.user.dao.RoleMapper;
 import com.changgou.user.dao.UserMapper;
 import com.changgou.user.pojo.Permission;
+import com.changgou.user.pojo.Role;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -28,11 +31,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PermissionMapper permissionMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Override
     public List<Permission> getPermissionByUsername(String username) {
         List<Permission> list = permissionMapper.getPermissionByUsername(username);
         return list;
+    }
+
+    @Override
+    public List<Role> getRoleList(String username) {
+        return roleMapper.getRoleList(username);
     }
 
     /**

@@ -32,10 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable() // 关闭csrf
             .authorizeRequests()
-                .antMatchers("/oauth/**","/login/**","/logout/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/r/r1").hasAuthority("p1")
+                .antMatchers("/r/r2").hasAuthority("p2")
+                .antMatchers("/r/r3").access("hasAuthority('p1') and hasAuthority('p2')")
+                .antMatchers("/r/**").authenticated() // 满足条件的必须认证
+                .anyRequest().permitAll() // 无需认证
                 .and()
                 .formLogin()
                 .permitAll();

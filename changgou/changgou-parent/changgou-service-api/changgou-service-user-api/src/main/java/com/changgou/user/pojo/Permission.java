@@ -20,6 +20,35 @@ public class Permission implements Serializable {
     @Column(name = "url")
     private String url; // 路径
 
+
+    @Column(name = "p_tag")
+    private String pTag;
+
+    public String getpTag() {
+        return pTag;
+    }
+
+    public void setpTag(String pTag) {
+        this.pTag = pTag;
+    }
+//    public String getpTag() {
+//        return pTag;
+//    }
+//
+//    public void setpTag(String pTag) {
+//        this.pTag = pTag;
+//    }
+
+//    private String p_tag;
+//
+//    public String getp_tag() {
+//        return p_tag;
+//    }
+//
+//    public void setp_tag(String p_tag) {
+//        this.p_tag = p_tag;
+//    }
+
     public String getId() {
         return id;
     }
@@ -59,6 +88,7 @@ public class Permission implements Serializable {
                 ", code='" + code + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
+                ", pTag='" + pTag + '\'' +
                 '}';
     }
 }

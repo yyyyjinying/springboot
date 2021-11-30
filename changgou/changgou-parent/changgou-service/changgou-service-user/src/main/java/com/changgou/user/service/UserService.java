@@ -1,6 +1,7 @@
 package com.changgou.user.service;
 
 import com.changgou.user.pojo.Permission;
+import com.changgou.user.pojo.Role;
 import com.changgou.user.pojo.User;
 import com.github.pagehelper.PageInfo;
 
@@ -13,7 +14,19 @@ import java.util.List;
  *****/
 public interface UserService {
 
+    /**
+     * 获取用户权限
+     * @param username
+     * @return
+     */
     List<Permission> getPermissionByUsername(String username);
+
+    /**
+     * 获取用户角色
+     * @param username
+     * @return
+     */
+    List<Role> getRoleList(String username);
 
     /***
      * User多条件分页查询

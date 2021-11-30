@@ -2,6 +2,7 @@ package com.changgou.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.changgou.user.pojo.Permission;
+import com.changgou.user.pojo.Role;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /****
  * @Author:admin
@@ -44,9 +42,25 @@ public class UserController {
     @GetMapping(value = "/premission/{username}")
     public Result<List<Permission>> permissionByUsername(@PathVariable("username") String username){
         List<Permission> list = userService.getPermissionByUsername(username);
-        return new Result<>(true,StatusCode.OK,"请求权限信息成功",list);
+        ArrayList<String> codeList = new ArrayList<>();
+        for (Permission permission : list) {
+            codeList.add(permission.getCode());
+
+        }
+        return new Result<>(true,StatusCode.OK,"请求权限信息成功",codeList);
 
     }
+
+    @GetMapping(value = "/role/{username}")
+    public List<String> getRoleByUsername(@PathVariable("username") String username){
+        List<Role> roleList = userService.getRoleList(username);
+        ArrayList<String> list = new ArrayList<>();
+        for (Role role : roleList) {
+            list.add("ROLE_"+role.getRoleTag());
+        }
+        return list;
+    }
+
 
 
     @GetMapping(value = "login")

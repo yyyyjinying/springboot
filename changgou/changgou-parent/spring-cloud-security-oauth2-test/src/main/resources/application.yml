@@ -24,10 +24,10 @@ feign:
 #打印日志
 logging:
   level:
-   com.changgou: debug
+   com.cloud: debug
 #mybatis的配置 可以不配置  需要整合通用mapper
-mybatis:
+#mybatis:
+#  mapper-locations: classpath:mapper/*Mapper.xml
 #  configuration:
-  mapper-locations: classpath:mapper/*Mapper.xml
 #    map-underscore-to-camel-case: true
 #  type-aliases-package: com.changgou.goods.pojo

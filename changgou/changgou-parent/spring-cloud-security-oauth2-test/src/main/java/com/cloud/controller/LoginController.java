@@ -54,4 +54,9 @@ public class LoginController {
         String username = getUsername();
         return username + " 访问资源2";
     }
+
+    @GetMapping("/demo")
+    public String getDemo() {
+        return "demo";
+    }
 }
