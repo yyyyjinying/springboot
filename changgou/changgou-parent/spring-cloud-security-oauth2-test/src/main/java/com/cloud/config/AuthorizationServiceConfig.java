@@ -48,6 +48,13 @@ public class AuthorizationServiceConfig extends AuthorizationServerConfigurerAda
     private TokenEnhancerConfig tokenEnhancerConfig;
 
 
+    /**
+     * 用来配置客户端像详情服务
+     * 客户端详情信息在这里初始化
+     * 可以写死，数据库存储数据信息
+     * @param clients
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -61,12 +68,13 @@ public class AuthorizationServiceConfig extends AuthorizationServerConfigurerAda
                 .redirectUris("http://www.baidu.com")
                 // 配置申请的权限范围
                 .scopes("all")
+                .resourceIds("resl") // 资源列表
                 /* 配置grant_type , 表示授权码模式
 //               * .authorizedGrantTypes("authorization_code");
                  * authorization_code： 授权码模式
                  * password：密码模式
                  */
-                .authorizedGrantTypes("authorization_code","password","refresh_token")
+                .authorizedGrantTypes("authorization_code","password","client_credentials","implicit","refresh_token")
                 // 设置令牌失效时间 60秒
                 .accessTokenValiditySeconds(3600)
                 // 刷新令牌失效时间
@@ -76,10 +84,7 @@ public class AuthorizationServiceConfig extends AuthorizationServerConfigurerAda
     }
 
     /**
-     * 密码模式
-     * 1.将生产的token存储在redis中
-     * 2。
-     *
+     * 用来配置令牌的访问端点和令牌服务
      * @param endpoints
      * @throws Exception
      */

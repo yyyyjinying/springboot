@@ -1,6 +1,8 @@
 package com.changgou.user.service.impl;
 
+import com.changgou.user.dao.PermissionMapper;
 import com.changgou.user.dao.UserMapper;
+import com.changgou.user.pojo.Permission;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -23,6 +25,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private PermissionMapper permissionMapper;
+
+
+    @Override
+    public List<Permission> getPermissionByUsername(String username) {
+        List<Permission> list = permissionMapper.getPermissionByUsername(username);
+        return list;
+    }
 
     /**
      * User条件+分页查询

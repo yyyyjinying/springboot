@@ -1,6 +1,7 @@
 package com.changgou.user.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.changgou.user.pojo.Permission;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -37,6 +38,14 @@ public class UserController {
     public User testLogin(@PathVariable("username") String username) {
         User userInfo = userService.findById(username);
         return userInfo;
+    }
+
+
+    @GetMapping(value = "/premission/{username}")
+    public Result<List<Permission>> permissionByUsername(@PathVariable("username") String username){
+        List<Permission> list = userService.getPermissionByUsername(username);
+        return new Result<>(true,StatusCode.OK,"请求权限信息成功",list);
+
     }
 
 

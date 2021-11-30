@@ -1,5 +1,6 @@
 package com.changgou.user.service;
 
+import com.changgou.user.pojo.Permission;
 import com.changgou.user.pojo.User;
 import com.github.pagehelper.PageInfo;
 
@@ -11,6 +12,8 @@ import java.util.List;
  * @Date 2019/6/14 0:16
  *****/
 public interface UserService {
+
+    List<Permission> getPermissionByUsername(String username);
 
     /***
      * User多条件分页查询
