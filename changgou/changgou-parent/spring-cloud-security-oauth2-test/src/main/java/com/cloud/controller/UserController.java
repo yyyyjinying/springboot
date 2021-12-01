@@ -27,16 +27,12 @@ public class UserController {
      * http://localhost:6010/oauth/token
      * post请求
      *
-     * Athorization
-     * basic auth
-     * username client
-     * password 112233
-     *
      *body
      * x-wwww-form-urlencoded
      *1. grant_type authorization_code
      *2. code kd13x5
      *3. client_id client
+     * client_secret 112233
      *4. redirect_uri http://www.baidu.com
      *5.  scope all
      *
@@ -59,6 +55,26 @@ public class UserController {
      * type: bearer token
      * Token: 2eb4c537-7451-4824-93d4-d905e86f1662
      * @return
+     */
+
+    /**
+     * 简化模式 response_type=token
+     * http://localhost:6010/oauth/authorize?response_type=token&scope=all&client_id=client&redirect_uri=http://www.baidu.com
+     * 访问直接返回：
+     * https://www.baidu.com/#access_token=ad2b8639-9eb4-49f5-8115-6d3171dec62c&token_type=bearer&expires_in=3599
+     */
+
+    /**
+     * 客户端模式
+     * post
+     * http://localhost:6010/oauth/token
+     *
+     * x-wwww-form-urlencoded
+     *
+     * params:
+     * grant_type client_credentials
+     * client_id client
+     * client_secret 112233
      */
 
 

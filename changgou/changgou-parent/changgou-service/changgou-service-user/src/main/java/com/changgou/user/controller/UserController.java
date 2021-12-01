@@ -10,7 +10,6 @@ import entity.BCrypt;
 import entity.JwtUtil;
 import entity.Result;
 import entity.StatusCode;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

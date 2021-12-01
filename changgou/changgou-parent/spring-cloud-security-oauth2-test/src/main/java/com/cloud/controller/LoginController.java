@@ -55,6 +55,25 @@ public class LoginController {
         return username + " 访问资源2";
     }
 
+   @GetMapping(value = "/r/r3")
+    public String r3(){
+        String username = getUsername();
+        return username + " 访问资源3";
+    }
+
+    @GetMapping(value = "/r/r4")
+    public String r4(){
+        String username = getUsername();
+        return username + " 访问资源4";
+
+    }
+
+    @GetMapping(value = "/r/r5")
+    public String r5(){
+        String username = getUsername();
+        return username + " 访问资源5";
+    }
+
     @GetMapping("/demo")
     public String getDemo() {
         return "demo";

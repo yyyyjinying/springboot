@@ -1,6 +1,5 @@
 package com.cloud.service.feign;
 
-import com.changgou.user.pojo.Permission;
 import com.changgou.user.pojo.User;
 import entity.Result;
 import org.springframework.cloud.openfeign.FeignClient;

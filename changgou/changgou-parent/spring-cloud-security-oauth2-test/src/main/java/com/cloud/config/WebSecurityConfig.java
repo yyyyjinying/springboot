@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 
 @Configuration
 @EnableWebSecurity
@@ -18,12 +20,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPW(){
         return new BCryptPasswordEncoder();
     }
-
-    @Override
+//
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    @Bean
+    public AuthorizationCodeServices authorizationCodeServices() {
+        // 存取，暂时采用内存方式
+        return new InMemoryAuthorizationCodeServices();
+    }
+
+
 
     // command + O快捷键重写方法
     @Override
@@ -32,13 +41,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable() // 关闭csrf
             .authorizeRequests()
-                .antMatchers("/r/r1").hasAuthority("p1")
+                .antMatchers("/r/r1").hasAuthority("p1") // p1,p3,p2,ROLE_admin,ROLE_query
                 .antMatchers("/r/r2").hasAuthority("p2")
                 .antMatchers("/r/r3").access("hasAuthority('p1') and hasAuthority('p2')")
-                .antMatchers("/r/**").authenticated() // 满足条件的必须认证
+//                .antMatchers("/r/r4").hasRole("admin") // 角色区分大小写
+                .antMatchers("/r/**")
+                .authenticated() // 满足条件的必须认证
                 .anyRequest().permitAll() // 无需认证
                 .and()
                 .formLogin()
+                .successForwardUrl("/loginSuccess") // 登录成功后跳转地址
                 .permitAll();
 //                .and()
 //                .logout()

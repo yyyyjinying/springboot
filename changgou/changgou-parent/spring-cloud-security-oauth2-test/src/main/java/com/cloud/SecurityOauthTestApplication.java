@@ -8,7 +8,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-
 public class SecurityOauthTestApplication {
     public static void main(String[] args) {
         SpringApplication.run(SecurityOauthTestApplication.class, args);
