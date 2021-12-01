@@ -1,11 +1,19 @@
 package com.cloud.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class tokenConfig {
@@ -21,6 +29,9 @@ public class tokenConfig {
 //        return new InMemoryTokenStore();
 //    }
 
+    @Autowired
+    private PasswordEncoder getPW;
+
 
     @Bean
     public TokenStore tokenStore() {
@@ -33,6 +44,19 @@ public class tokenConfig {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         jwtAccessTokenConverter.setSigningKey(SIGNING_KEY); // 对称密钥，资源服务器使用该密钥来验证
         return jwtAccessTokenConverter;
+    }
+
+    @Bean
+    public ClientDetailsService clientDetailsService(DataSource dataSource) {
+        ClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        ((JdbcClientDetailsService)
+                clientDetailsService).setPasswordEncoder(getPW);
+        return clientDetailsService;
+    }
+
+    @Bean
+    public AuthorizationCodeServices authorizationCodeServices(DataSource dataSource) {
+        return new JdbcAuthorizationCodeServices(dataSource);//设置授权码模式的授权码如何存取
     }
 //
 //    @Bean

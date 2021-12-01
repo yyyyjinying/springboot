@@ -1,5 +1,6 @@
 package com.cloud;
 
+import entity.BCrypt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +18,12 @@ import java.util.HashMap;
 @RunWith(SpringRunner.class)
 @SpringBootTest//(classes = SoauthApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class Test01 {
+
+    @Test
+    public void getPW(){
+        String hashpw = BCrypt.hashpw("112233", BCrypt.gensalt());
+        System.out.println(hashpw);
+    }
 
     /**
      * 创建token

@@ -5,13 +5,14 @@ spring:
     name: demosoauth
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-#    url: jdbc:mysql://192.168.211.132:3306/changgou_goods?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/changgou_user?useSSL=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 123456
-  redis:
-    host: 172.16.147.184
-    port: 6379
+  main:
+    allow-bean-definition-overriding: true
+#  redis:
+#    host: 172.16.147.184
+#    port: 6379
 eureka:
   client:
     service-url:
@@ -24,10 +25,8 @@ feign:
 #打印日志
 logging:
   level:
-   com.cloud: debug
-#mybatis的配置 可以不配置  需要整合通用mapper
-#mybatis:
-#  mapper-locations: classpath:mapper/*Mapper.xml
-#  configuration:
-#    map-underscore-to-camel-case: true
-#  type-aliases-package: com.changgou.goods.pojo
+    com.changgou: debug
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true

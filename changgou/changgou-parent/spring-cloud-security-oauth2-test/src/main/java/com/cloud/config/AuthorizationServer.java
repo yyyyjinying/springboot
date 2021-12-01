@@ -13,13 +13,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 /**
@@ -44,7 +47,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private AuthorizationCodeServices authorizationCodeServices;
-    //
+
     @Autowired
     private ClientDetailsService clientDetailsService;
 
@@ -64,6 +67,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         return service;
     }
 
+
     /**
      * 用来配置客户端像详情服务
      * 客户端详情信息在这里初始化
@@ -74,7 +78,11 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        /*
+        *
+        * 客户端详情信息放在内存中测试使用，生产中放在数据库中
         clients.inMemory()
+
                 // 配置client-id
                 .withClient("client")
                 // 配置client-secret
@@ -84,11 +92,11 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 配置申请的权限范围
                 .scopes("all")
                 .resourceIds("res1") // 资源列表
-                /* 配置grant_type , 表示授权码模式
-//               * .authorizedGrantTypes("authorization_code");
-                 * authorization_code： 授权码模式
-                 * password：密码模式
-                 */
+//                 配置grant_type , 表示授权码模式
+////               * .authorizedGrantTypes("authorization_code");
+//                 * authorization_code： 授权码模式
+//                 * password：密码模式
+
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit", "refresh_token")
                 // 配置访问token的有效期
                 .accessTokenValiditySeconds(3600)
@@ -96,6 +104,10 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .refreshTokenValiditySeconds(864000)
                 // 是否自动授权
                 .autoApprove(true);
+
+               */
+
+        clients.withClientDetails(clientDetailsService);
     }
 
     /**

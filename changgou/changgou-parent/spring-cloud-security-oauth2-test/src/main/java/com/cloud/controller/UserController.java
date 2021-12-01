@@ -17,7 +17,7 @@ public class UserController {
     /**
      *第一步： 用户向授权服务器申请授权-》 获取授权码
      * 去授权服务器获取授权码
-     * http://localhost:6010/oauth/authorize?response_type=code&scope=all&client_id=client&redirect_uri=http://www.baidu.com
+     * http://localhost:6010/oauth/authorize?response_type=code&scope=ROLE_ADMIN&client_id=c1&redirect_uri=http://www.baidu.com
      * @return https://www.baidu.com/?code=CqiP08
      */
 
@@ -31,10 +31,10 @@ public class UserController {
      * x-wwww-form-urlencoded
      *1. grant_type authorization_code
      *2. code kd13x5
-     *3. client_id client
+     *3. client_id c1
      * client_secret 112233
      *4. redirect_uri http://www.baidu.com
-     *5.  scope all
+     *5.  scope ROLE_ADMIN
      *
      *
      * @return {
