@@ -29,6 +29,10 @@ public class PayFeignController {
     @Autowired
     PayHystrixService payHystrixService;
 
+    @GetMapping("/test")
+    public String test(){
+        return "不认证--资源服务器测试";
+    }
 
     @GetMapping("/user/{username}")
     public User testLogin(){

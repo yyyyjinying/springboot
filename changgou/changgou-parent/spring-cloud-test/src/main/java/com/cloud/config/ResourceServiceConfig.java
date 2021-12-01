@@ -34,7 +34,7 @@ public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
         //使用远程服务请求授权服务器校验token,必须指定校验token 的url、client_id，client_secret
         RemoteTokenServices service = new RemoteTokenServices();
         service.setCheckTokenEndpointUrl("http://localhost:6010/oauth/check_token");
-        service.setClientId("client");
+        service.setClientId("c1");
         service.setClientSecret("112233");
         return service;
     }
@@ -50,10 +50,17 @@ public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                .antMatchers("/**").access("#oauth2.hasScope('all')")
-                .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .antMatchers("/r/**").authenticated() // "/r的请求需要走认证"
+                .anyRequest()
+                .permitAll();
+
+//                .antMatchers("/**").access("#oauth2.hasScope('ROLE_ADMIN')")
+//                .and().csrf().disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        http.csrf().disable()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
