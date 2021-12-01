@@ -13,7 +13,12 @@ spring:
 #              uri: localhost:18060  # 匹配成功后，提供服务的路由地址
               uri: lb://CLOUD-TEST # 匹配注册中心的服务的路由地址 前提必须开启locator.enabled:true
               predicates: # 断言 匹配路径进行路由
-                - Path=/feign/**
+                - Path=/api/feign/**,/api/r/**
+              filters:
+#                - PrefixPath=/gw
+                - StripPrefix=1  # http://localhost:18050/api/feign/test
+
+
             - id: route_id_02
 #              uri: localhost:18061
               uri: lb://CLOUD-TEST-01
@@ -22,10 +27,10 @@ spring:
 #                - After=2021-11-22T19:48:34.680+08:00[Asia/Shanghai]
 #                - Cookie=username,zzyy # curl http://localhost:18050/hystrix/ok/1 --cookie username=zzyy
 #                - Header=X-Request-Id,\d+ # curl http://localhost:18050/hystrix/ok/1  -H "X-Request-Id:12"   请求头要有X-Request-Id 属性并且值为整数的正则表达式
-#              filters:
-#              #- PrefixPath=/brand # 在所有的路径上添加 /brand
+              filters:
+              #- PrefixPath=/brand # 在所有的路径上添加 /brand
 #              - StripPrefix=1  # 反问路径去掉一个路径：1 ，2
-##              - PrefixPath=/brand
+#              - PrefixPath=/brand
 
               #redis-rate-limiter.replenishRate是您希望允许用户每秒执行多少请求，而不会丢弃任何请求。这是令牌桶填充的速率
               #redis-rate-limiter.burstCapacity是指令牌桶的容量，允许在一秒钟内完成的最大请求数,将此值设置为零将阻止所有请求。
