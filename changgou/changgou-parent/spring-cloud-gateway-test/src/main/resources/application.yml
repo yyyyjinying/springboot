@@ -9,17 +9,21 @@ spring:
         locator:
           enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名进行路由
       routes:
+            - id: route_id_00  # 路由ID，没有固定规则，但必须唯一， 建议配合服务名
+#              uri: localhost:18060  # 匹配成功后，提供服务的路由地址
+              uri: lb://DEMOSOAUTH # 匹配注册中心的服务的路由地址 前提必须开启locator.enabled:true
+              predicates: # 断言 匹配路径进行路由
+                - Path=/api/oauth/**
+              filters:
+                - StripPrefix=1
             - id: route_id_01  # 路由ID，没有固定规则，但必须唯一， 建议配合服务名
 #              uri: localhost:18060  # 匹配成功后，提供服务的路由地址
               uri: lb://CLOUD-TEST # 匹配注册中心的服务的路由地址 前提必须开启locator.enabled:true
               predicates: # 断言 匹配路径进行路由
                 - Path=/api/feign/**,/api/r/**
               filters:
-#                - PrefixPath=/gw
                 - StripPrefix=1  # http://localhost:18050/api/feign/test
-
-
-            - id: route_id_02
+            - id: route_id_03
 #              uri: localhost:18061
               uri: lb://CLOUD-TEST-01
               predicates:
