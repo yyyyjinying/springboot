@@ -24,6 +24,14 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper;
 
 
+    @Override
+    public List<Address> userListAddress(String username) {
+        Address address = new Address();
+        address.setUsername(username);
+        List<Address> select = addressMapper.select(address);
+        return select;
+    }
+
     /**
      * Address条件+分页查询
      * @param address 查询条件

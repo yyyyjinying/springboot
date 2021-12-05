@@ -2,6 +2,7 @@ package com.changgou.user.controller;
 
 import com.changgou.user.pojo.Address;
 import com.changgou.user.service.AddressService;
+import com.changgou.user.utils.TokenUtils;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /****
  * @Author:admin
@@ -23,6 +25,19 @@ public class AddressController {
 
     @Autowired
     private AddressService addressService;
+
+
+    /**
+     * 请求用户地址信息
+     * @return
+     */
+    @GetMapping(value = "/user/list")
+    public Result<Address> usrListAddress(){
+        Map<String, String> userInfo = TokenUtils.getUserInfo();
+        String username = userInfo.get("user_name");
+        List<Address> list = addressService.userListAddress(username);
+        return new Result<Address>(true,StatusCode.OK,"请求用户地址成功",list);
+    }
 
     /***
      * Address分页条件搜索实现
