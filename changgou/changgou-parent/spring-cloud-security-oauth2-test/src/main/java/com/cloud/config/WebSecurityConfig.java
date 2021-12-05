@@ -69,11 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .successForwardUrl("/loginSuccess") // 登录成功后跳转地址
 //                .loginProcessingUrl("/user/login") // 登录页面表单的提交地址， 必须和表单提交的接口一样，会去执行自定义登录逻辑
                 .permitAll();
-
-
 //                .and()
 //                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login");
+//                .logoutUrl("/oauth/logout")
+//                .logoutSuccessUrl("/oauth/login");
     }
 }

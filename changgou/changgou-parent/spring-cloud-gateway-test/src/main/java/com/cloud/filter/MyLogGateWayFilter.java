@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.RequestPath;
@@ -47,19 +48,24 @@ public class MyLogGateWayFilter implements GlobalFilter,Ordered {
         if (StringUtils.isEmpty(token)) {
             if(request.getHeaders().containsKey("token")) {
                 token = request.getHeaders().get("token").get(0);
-                if(!token.startsWith("bearer")){
-                    token = "bearer " + token;
-                }
             }
         }
 
-        if (StringUtils.isEmpty(token)) {
-//            response.setStatusCode(HttpStatus.METHOD_NOT_ALLOWED);
-//            return response.setComplete();
-            return chain.filter(exchange);
+        // cookie 是否有token
+        if(StringUtils.isEmpty(token)){
+            HttpCookie first = request.getCookies().getFirst(AUTHORIZE_TOKEN);
+            token = first.getValue();
         }
 
-        ServerHttpRequest headerRequest = request.mutate().header(AUTHORIZE_TOKEN, token).build();
+        if (StringUtils.isEmpty(token)) {
+            //4.4. 如果没有数据    没有登录,要重定向到登录到页面
+            response.setStatusCode(HttpStatus.SEE_OTHER);//303 302
+            //location 指定的就是路径
+            response.getHeaders().set("Location","/oauth/login");
+            return response.setComplete();
+        }
+
+        ServerHttpRequest headerRequest = request.mutate().header(AUTHORIZE_TOKEN,  "bearer " + token).build();
         ServerWebExchange build = exchange.mutate().request(headerRequest).build();
 
 
