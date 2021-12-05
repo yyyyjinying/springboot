@@ -23,13 +23,13 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class MyLogGateWayFilter implements GlobalFilter,Ordered {
+public class MyLogGateWayFilter implements GlobalFilter, Ordered {
     //令牌头名字
     private static final String AUTHORIZE_TOKEN = "Authorization";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("*******come in MyLogGateWayFilter: "+new Date());
+        log.info("*******come in MyLogGateWayFilter: " + new Date());
 //        String name = exchange.getRequest().getQueryParams().getFirst("name");
 
         ServerHttpRequest request = exchange.getRequest();
@@ -46,26 +46,26 @@ public class MyLogGateWayFilter implements GlobalFilter,Ordered {
 
         // 请求header中authorization没有值 判断header是否有token拼接authorization
         if (StringUtils.isEmpty(token)) {
-            if(request.getHeaders().containsKey("token")) {
+            if (request.getHeaders().containsKey("token")) {
                 token = request.getHeaders().get("token").get(0);
             }
         }
 
         // cookie 是否有token
-        if(StringUtils.isEmpty(token)){
+        if (StringUtils.isEmpty(token)) {
             HttpCookie first = request.getCookies().getFirst(AUTHORIZE_TOKEN);
-            token = first.getValue();
+            token = first == null ? null : first.getValue();
         }
 
         if (StringUtils.isEmpty(token)) {
             //4.4. 如果没有数据    没有登录,要重定向到登录到页面
             response.setStatusCode(HttpStatus.SEE_OTHER);//303 302
             //location 指定的就是路径
-            response.getHeaders().set("Location","/oauth/login");
+            response.getHeaders().set("Location", "/oauth/login");
             return response.setComplete();
         }
 
-        ServerHttpRequest headerRequest = request.mutate().header(AUTHORIZE_TOKEN,  "bearer " + token).build();
+        ServerHttpRequest headerRequest = request.mutate().header(AUTHORIZE_TOKEN, "bearer " + token).build();
         ServerWebExchange build = exchange.mutate().request(headerRequest).build();
 
 
