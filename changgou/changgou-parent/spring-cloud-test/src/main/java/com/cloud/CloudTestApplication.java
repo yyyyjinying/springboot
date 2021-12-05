@@ -1,6 +1,6 @@
 package com.cloud;
 
-import com.cloud.interceptor.FeignInterceptor;
+import interceptor.FeignInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;

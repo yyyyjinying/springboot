@@ -1,4 +1,4 @@
-package com.cloud.interceptor;
+package interceptor;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

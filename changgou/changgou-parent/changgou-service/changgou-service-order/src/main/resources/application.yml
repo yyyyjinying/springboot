@@ -9,7 +9,7 @@ spring:
       username: root
       password: 123456
   redis:
-    host: 172.16.147.183
+    host: 172.16.147.184
     port: 6379
   main:
     allow-bean-definition-overriding: true
@@ -20,9 +20,18 @@ eureka:
       defaultZone: http://127.0.0.1:7001/eureka
   instance:
     prefer-ip-address: true
-feign:
-  hystrix:
-    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE  # 解决返回null值的问题 ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+#feign:
+#  hystrix:
+#    enabled: true
 ribbon:
   ReadTimeout: 4000   #负载均衡超时时间，默认值5000
   ConnectTimeout: 4000 #ribbon请求连接的超时时间，默认值2000

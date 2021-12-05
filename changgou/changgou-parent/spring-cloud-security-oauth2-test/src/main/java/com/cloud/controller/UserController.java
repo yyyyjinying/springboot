@@ -1,18 +1,76 @@
 package com.cloud.controller;
 
+import com.cloud.service.LoginService;
+import com.cloud.utils.AuthToken;
+import com.cloud.utils.CookieUtil;
+import entity.Result;
+import entity.StatusCode;
 import io.jsonwebtoken.Jwts;
 import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private LoginService loginService;
+
+    @Value("${oauth.clientId}")
+    private String clientId;
+
+    @Value("${oauth.clientSecret}")
+    private String clientSecret;
+
+    private static final String GRAND_TYPE = "password";//授权模式 密码模式
+
+
+    @Value("${oauth.cookieDomain}")
+    private String cookieDomain;
+
+    //Cookie生命周期
+    @Value("${oauth.cookieMaxAge}")
+    private int cookieMaxAge;
+
+
+
+
+    /**
+     * 密码模式  认证.
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping("/login")
+    public Result<Map> login(String username, String password) {
+        //登录 之后生成令牌的数据返回
+        AuthToken authToken = loginService.login(username, password, clientId, clientSecret, GRAND_TYPE);
+
+
+        //设置到cookie中
+        saveCookie(authToken.getAccessToken());
+        return new Result<>(true, StatusCode.OK,"令牌生成成功",authToken);
+    }
+
+    private void saveCookie(String token){
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        CookieUtil.addCookie(response,cookieDomain,"/","Authorization",token,cookieMaxAge,false);
+    }
+
     //一、授权码模式
     /**
      *第一步： 用户向授权服务器申请授权-》 获取授权码
