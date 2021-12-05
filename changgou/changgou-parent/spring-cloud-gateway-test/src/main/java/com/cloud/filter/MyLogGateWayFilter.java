@@ -37,7 +37,7 @@ public class MyLogGateWayFilter implements GlobalFilter,Ordered {
         String path = request.getURI().getPath();
 
         // 若果是认证授权放行
-        if (path.startsWith("/api/oauth/")) {
+        if (path.startsWith("/oauth/") || path.startsWith("/user/login")) {
             return chain.filter(exchange);
         }
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,13 +34,17 @@ public class LoginServiceImpl implements LoginService {
         ServiceInstance choose = loadBalancerClient.choose("demosoauth");
         String url =choose.getUri().toString()+"/oauth/token";
 
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/x-www-form-urlencoded");
+
         //2.定义头信息 (有client id 和client secr)
-        MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
-        headers.add("Authorization","Basic "+Base64.getEncoder().encodeToString(new String(clientId+":"+clientSecret).getBytes()));
+//        MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
+//        headers.add("Authorization","Basic "+Base64.getEncoder().encodeToString(new String(clientId+":"+clientSecret).getBytes()));
         //3. 定义请求体  有授权模式 用户的名称 和密码
         MultiValueMap<String,String> formData = new LinkedMultiValueMap<>();
-//        formData.add("client_id",clientId);
-//        formData.add("client_secret",clientSecret);
+        formData.add("client_id",clientId);
+        formData.add("client_secret",clientSecret);
         formData.add("grant_type",grandType);
         formData.add("username",username);
         formData.add("password",password);

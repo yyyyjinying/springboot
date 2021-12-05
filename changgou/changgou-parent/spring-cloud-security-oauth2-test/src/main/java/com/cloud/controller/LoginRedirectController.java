@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
@@ -17,9 +18,9 @@ public class LoginRedirectController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(String From, Model model) {
-        model.addAttribute("from",From);
-
+    public String login(HttpServletRequest httpServletRequest, Model model) {
+        String url = httpServletRequest.getParameter("url");
+        model.addAttribute("from",url);
         return "login";
     }
 

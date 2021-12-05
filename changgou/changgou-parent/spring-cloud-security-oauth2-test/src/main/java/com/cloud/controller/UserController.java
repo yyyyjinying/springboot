@@ -56,7 +56,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/login")
-    public Result<Map> login(String username, String password) {
+    public Result login(String username, String password) {
         //登录 之后生成令牌的数据返回
         AuthToken authToken = loginService.login(username, password, clientId, clientSecret, GRAND_TYPE);
 
