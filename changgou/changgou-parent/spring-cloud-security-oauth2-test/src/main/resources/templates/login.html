@@ -115,7 +115,9 @@
 							<!--异步提交 -->
 							<div class="logined">
 								<button @click="login()" class="sui-btn btn-block btn-xlarge btn-danger">登&nbsp;&nbsp;录</button>
+								<span style="text-align:center;color:red;">{{msg}}</span>
 							</div>
+
 							<div class="otherlogin">
 								<div class="types">
 									<ul>
@@ -172,17 +174,20 @@
 	var app = new Vue({
 		el:"#app",
 		data:{
+		    msg: "提示信息",
 			username:'',
 			password:'',
 			fromx:[[${from}]]
 		},
 		methods:{
 			login:function () {
+			    const _this = this;
 				axios.post('/user/login?username='+this.username+'&password='+this.password).then(
 				    function (response) {
 						if(response.data.flag){//登录成功
 						    //跳转到之前的页面
 							alert("成功");
+							_this.msg = response.data.message;
 						}else{
 						    response.data.message;
 						}

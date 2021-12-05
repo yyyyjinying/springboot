@@ -35,6 +35,9 @@ public class UserController {
     @Value("${oauth.clientSecret}")
     private String clientSecret;
 
+    @Value("${oauth.scope}")
+    private String scopeValue;
+
     private static final String GRAND_TYPE = "password";//授权模式 密码模式
 
 
@@ -50,15 +53,15 @@ public class UserController {
 
     /**
      * 密码模式  认证.
-     *
+     *post request methoded
      * @param username
      * @param password
      * @return
      */
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public Result login(String username, String password) {
         //登录 之后生成令牌的数据返回
-        AuthToken authToken = loginService.login(username, password, clientId, clientSecret, GRAND_TYPE);
+        AuthToken authToken = loginService.login(username, password, scopeValue, clientId, clientSecret, GRAND_TYPE);
 
 
         //设置到cookie中

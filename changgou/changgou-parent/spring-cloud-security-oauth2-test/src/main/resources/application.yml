@@ -32,6 +32,7 @@ mybatis:
     map-underscore-to-camel-case: true
 oauth:
   ttl: 3600  #token存储到redis的过期时间
+  scope: ROLE_ADMIN
   clientId: c1
   clientSecret: 112233
   cookieDomain: localhost

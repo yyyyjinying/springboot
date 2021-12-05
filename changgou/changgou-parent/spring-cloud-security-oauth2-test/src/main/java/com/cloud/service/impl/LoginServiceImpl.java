@@ -27,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
     private LoadBalancerClient loadBalancerClient;
 
     @Override
-    public AuthToken login(String username, String password, String clientId, String clientSecret, String grandType) {
+    public AuthToken login(String username, String password, String scopeValue, String clientId, String clientSecret, String grandType) {
 
         //1.定义url (申请令牌的url)
         //参数 : 微服务的名称spring.appplication指定的名称
@@ -48,7 +48,7 @@ public class LoginServiceImpl implements LoginService {
         formData.add("grant_type",grandType);
         formData.add("username",username);
         formData.add("password",password);
-        formData.add("scope","ROLE_ADMIN");
+        formData.add("scope",scopeValue);
         //4.模拟浏览器 发送POST 请求 携带 头 和请求体 到认证服务器
 
         /**
