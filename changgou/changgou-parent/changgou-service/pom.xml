@@ -30,7 +30,17 @@
             <artifactId>changgou-common-db</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
+        <!--    统一日志 @Sf4l-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--作为资源服务器-做权限验证-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

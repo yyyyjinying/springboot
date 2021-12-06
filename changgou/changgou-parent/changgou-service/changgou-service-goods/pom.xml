@@ -46,13 +46,14 @@
             <version>2.0.5.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.changgou</groupId>
             <artifactId>changgou-service-order-api</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--作为资源服务器添加权限校验-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
     </dependencies>
 </project>
