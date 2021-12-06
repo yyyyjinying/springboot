@@ -27,7 +27,7 @@ spring:
 #              uri: localhost:18060  # 匹配成功后，提供服务的路由地址
               uri: lb://ORDER # 匹配注册中心的服务的路由地址 前提必须开启locator.enabled:true
               predicates: # 断言 匹配路径进行路由
-                - Path=/api/cart/**
+                - Path=/api/cart/**,/api/order/**
               filters:
                 - StripPrefix=1  # http://localhost:18050/api/feign/test
             - id: route_id_04  # 路由ID，没有固定规则，但必须唯一， 建议配合服务名

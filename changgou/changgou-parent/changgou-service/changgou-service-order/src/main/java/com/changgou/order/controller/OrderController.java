@@ -1,7 +1,9 @@
 package com.changgou.order.controller;
 
 import com.changgou.order.pojo.Order;
+import com.changgou.order.pojo.OrderItem;
 import com.changgou.order.service.OrderService;
+import com.changgou.order.utils.TokenUtils;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /****
  * @Author:admin
@@ -23,6 +26,16 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+
+    @PostMapping("/addOrder")
+    private Result<Integer> addOrder(@RequestBody Order order){
+        Map<String, String> userInfo = TokenUtils.getUserInfo();
+        String username = userInfo.get("user_name");
+        order.setUsername(username);
+        Integer integer = orderService.addOrder(order);
+        return new Result<Integer>(true,StatusCode.OK,"下订单成功",integer);
+    }
 
     /***
      * Order分页条件搜索实现

@@ -3,6 +3,7 @@ package com.changgou.goods.controller;
 import com.changgou.goods.pojo.*;
 import com.changgou.goods.service.*;
 import com.changgou.goods.service.impl.SpecServiceImpl;
+import com.changgou.order.pojo.OrderItem;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
@@ -40,6 +41,12 @@ public class SkuController {
 
     @Autowired
     private TemplateService templateService;
+
+    @PostMapping("/decrCount")
+    public Integer decrCount(@RequestBody OrderItem orderItem){
+        Integer i = skuService.decrCount(orderItem);
+        return i;
+    }
 
     /***
      * Sku分页条件搜索实现

@@ -12,6 +12,8 @@ import java.util.List;
  *****/
 public interface OrderService {
 
+    public Integer addOrder(Order order);
+
     /***
      * Order多条件分页查询
      * @param order

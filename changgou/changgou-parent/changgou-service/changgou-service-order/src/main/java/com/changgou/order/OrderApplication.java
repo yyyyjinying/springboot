@@ -1,5 +1,6 @@
 package com.changgou.order;
 
+import entity.IdWorker;
 import interceptor.FeignInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,11 @@ public class OrderApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(OrderApplication.class,args);
+    }
+
+    @Bean
+    public IdWorker idWorker(){
+        return new IdWorker(1,1);
     }
 
     @Bean

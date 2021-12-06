@@ -1,6 +1,7 @@
 package com.changgou.goods.service;
 
 import com.changgou.goods.pojo.Sku;
+import com.changgou.order.pojo.OrderItem;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
  * @Date 2019/6/14 0:16
  *****/
 public interface SkuService {
+
+    Integer decrCount(OrderItem orderItem);
     /**
      * 修改sku的规格参数
      */
