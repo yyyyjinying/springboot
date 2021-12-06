@@ -3,6 +3,7 @@ package com.changgou.order.service.impl;
 import com.changgou.goods.feign.SkuFeign;
 import com.changgou.order.dao.OrderItemMapper;
 import com.changgou.order.dao.OrderMapper;
+import com.changgou.order.feign.UserFeign;
 import com.changgou.order.pojo.Order;
 import com.changgou.order.pojo.OrderItem;
 import com.changgou.order.service.CartService;
@@ -14,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     IdWorker idWorker;
+
+    @Autowired
+    private UserFeign userFeign;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -51,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Integer addOrder(Order order) {
 
-        // 查询用户所有的购物车
+        // 1、查询用户所有的购物车
         List<OrderItem> list = cartService.list(order.getUsername());
 
         Integer count = 0;
@@ -68,8 +70,8 @@ public class OrderServiceImpl implements OrderService {
             totalMoney += orderItem.getMoney();
             payMoney += orderItem.getPayMoney();
 
-            // 下单后减少库存 ok
-            count = skuFeign.decrCount(orderItem);
+            //2、 下单后减少库存
+            skuFeign.decrCount(orderItem);
         }
 
         order.setId("NO."+idWorker.nextId());
@@ -85,10 +87,11 @@ public class OrderServiceImpl implements OrderService {
         order.setPayStatus("0");        //0:未支付，1：已支付，2：支付失败
         order.setConsignStatus("0");    //0:未发货，1：已发货，2：已收货
 
-        orderMapper.insertSelective(order);
+        // 3、新增订单
+        count = orderMapper.insertSelective(order);
 
 
-        // 订单详情
+        // 4、新增订单详情数据
         for (OrderItem orderItem : list) {
 
             orderItem.setId("NO."+idWorker.nextId());
@@ -97,7 +100,10 @@ public class OrderServiceImpl implements OrderService {
             ordeItemMapper.insertSelective(orderItem);
         }
 
-        //清除Redis缓存购物车数据
+        // 6.每次下单成功后增加积分
+        userFeign.addPoints(10);
+
+        // 5、清除Redis缓存购物车数据
         redisTemplate.delete("Cart_"+order.getUsername());
 
         return count;

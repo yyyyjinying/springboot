@@ -15,6 +15,14 @@ import java.util.List;
 public interface UserService {
 
     /**
+     * 下单后增加积分
+     * @param username
+     * @param points
+     * @return
+     */
+    Integer addPoints(String username, Integer points);
+
+    /**
      * 获取用户权限
      * @param username
      * @return

@@ -5,6 +5,7 @@ import com.changgou.user.pojo.Permission;
 import com.changgou.user.pojo.Role;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
+import com.changgou.user.utils.TokenUtils;
 import com.github.pagehelper.PageInfo;
 import entity.BCrypt;
 import entity.JwtUtil;
@@ -31,7 +32,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/testLogin/{username}")
+    @GetMapping("/points/add/{points}")
+    public Result<Integer> addPoints(@PathVariable("points")  Integer points){
+        String username = TokenUtils.getUserInfo().get("user_name");
+        Integer integer = userService.addPoints(username, points);
+        return new Result<Integer>(true, StatusCode.OK,"添加积分成功",integer);
+    }
+
+   @GetMapping(value = "/testLogin/{username}")
     public User testLogin(@PathVariable("username") String username) {
         User userInfo = userService.findById(username);
         return userInfo;

@@ -37,6 +37,8 @@ public class PayFeignController {
     @GetMapping("/user/{username}")
     public User testLogin(){
         User admin = userFeign.testLogin("admin");
+        Result<Integer> integerResult = userFeign.addPoints(10);
+
         System.out.println(admin.toString());
         return admin;
     }

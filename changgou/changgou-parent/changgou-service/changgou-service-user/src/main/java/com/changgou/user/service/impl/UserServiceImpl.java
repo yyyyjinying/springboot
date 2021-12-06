@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService {
     private RoleMapper roleMapper;
 
     @Override
+    public Integer addPoints(String username, Integer points) {
+        return userMapper.addPoints(username, points);
+    }
+
+    @Override
     public List<Permission> getPermissionByUsername(String username) {
         List<Permission> list = permissionMapper.getPermissionByUsername(username);
         return list;

@@ -38,7 +38,7 @@ public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/address/**").authenticated() // "/r的请求需要走认证"
+                .antMatchers("/address/**","/user/points/**").authenticated() // "/r的请求需要走认证"
                 .anyRequest()
                 .permitAll();
     }
