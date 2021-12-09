@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 
-@Configuration
+//@Configuration
 public class DelayedQueueConfig {
     public static final String DELAYED_QUEUE_NAME = "delayed.queue";
     public static final String DELAYED_EXCHANGE_NAME = "delayed.exchange";

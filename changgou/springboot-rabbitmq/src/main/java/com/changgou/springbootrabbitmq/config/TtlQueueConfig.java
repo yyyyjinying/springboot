@@ -60,7 +60,7 @@ public class TtlQueueConfig {
         //声明当前队列的死信路由 key
         args.put("x-dead-letter-routing-key", "YD");
         //声明队列的 TTL
-        args.put("x-message-ttl", 40000);
+        args.put("x-message-ttl", 30000);
         return QueueBuilder.durable(QUEUE_B).withArguments(args).build();
     }
 
@@ -80,7 +80,7 @@ public class TtlQueueConfig {
         args.put("x-dead-letter-routing-key", "YD");
         return QueueBuilder.durable(QUEUE_C).withArguments(args).build();
     }
-
+//
     // 队列与交换机进行绑定
     @Bean
     public Binding queuecBindingX(@Qualifier("queueC") Queue queueC, @Qualifier("xExchange") DirectExchange xExchange){

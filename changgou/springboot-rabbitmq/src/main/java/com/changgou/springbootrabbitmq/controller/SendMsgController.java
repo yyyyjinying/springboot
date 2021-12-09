@@ -21,21 +21,20 @@ public class SendMsgController {
     RabbitTemplate rabbitTemplate;
 
     /**
-     *  http://localhost:8088/ttl/sendMsg/你好1
-     *  http://localhost:8088/ttl/sendMsg/你好2
+     *  http://localhost:8088/ttl/sendMsg/你好
      * @param message
      */
     @GetMapping("/sendMsg/{message}")
     public void sendMsg(@PathVariable("message") String message) {
         log.info("当前时间：{},发送一条信息给两个 TTL 队列:{}", new Date(), message);
         rabbitTemplate.convertAndSend("X", "XA", "消息来自 ttl 为 10S 的队列: " + message);
-        rabbitTemplate.convertAndSend("X", "XB", "消息来自 ttl 为 40S 的队列: " + message);
+        rabbitTemplate.convertAndSend("X", "XB", "消息来自 ttl 为 30S 的队列: " + message);
 
     }
 
     /**
-     * http://localhost:8088/ttl/sendExpirationMsg/你好 1/2000
-     * http://localhost:8088/ttl/sendExpirationMsg/你好 2/200
+     * http://localhost:8088/ttl/sendExpirationMsg/你好1/20000
+     * http://localhost:8088/ttl/sendExpirationMsg/你好2/6000
      *
      * @param message
      * @param ttlTime
@@ -43,7 +42,8 @@ public class SendMsgController {
     @GetMapping("/sendExpirationMsg/{message}/{ttlTime}")
     public void sendMsg(@PathVariable("message") String message, @PathVariable("ttlTime") String ttlTime) {
         log.info("当前时间：{},发送一条信息给expiration队列:{},时间间隔：{}", new Date(), message, ttlTime);
-        rabbitTemplate.convertAndSend(TtlQueueConfig.X_EXCHANGE, TtlQueueConfig.QUEUE_C, message, megs -> {
+        rabbitTemplate.convertAndSend("X", "XC", message, megs -> {
+            System.out.println("啊啊啊");
             megs.getMessageProperties().setExpiration(ttlTime);
             return megs;
         });
