@@ -1,15 +1,14 @@
 package com.changgou.rabbitmq.eight;
 
 import com.changgou.rabbitmq.utils.RabbitMqUtils;
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.util.HashMap;
 
-// 首先启动，创建普通交换机和死信交换机,然后关闭，在启动生产者发消息
-public class Consumer01 {
+// 首先启动，创建普通交换机和死信交换机,不要关闭，在启动生产者发消息
+public class Consumer03 {
     // 普通交换机的名称
     public static final String NORMAL_EXCHANGE = "normal_exchange";
     // 死信交换机的名称

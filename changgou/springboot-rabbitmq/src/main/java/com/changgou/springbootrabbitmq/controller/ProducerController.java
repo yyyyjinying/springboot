@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.security.auth.login.Configuration;
 
 @Slf4j
-@RestController
-@RequestMapping("/confirm")
+//@RestController
+//@RequestMapping("/confirm")
 public class ProducerController {
 
     @Autowired

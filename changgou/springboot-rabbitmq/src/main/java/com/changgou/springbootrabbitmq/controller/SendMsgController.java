@@ -20,6 +20,11 @@ public class SendMsgController {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    /**
+     *  http://localhost:8088/ttl/sendMsg/你好1
+     *  http://localhost:8088/ttl/sendMsg/你好2
+     * @param message
+     */
     @GetMapping("/sendMsg/{message}")
     public void sendMsg(@PathVariable("message") String message) {
         log.info("当前时间：{},发送一条信息给两个 TTL 队列:{}", new Date(), message);
@@ -29,8 +34,8 @@ public class SendMsgController {
     }
 
     /**
-     * http://localhost:8080/ttl/sendExpirationMsg/你好 1/2000
-     * http://localhost:8080/ttl/sendExpirationMsg/你好 2/200
+     * http://localhost:8088/ttl/sendExpirationMsg/你好 1/2000
+     * http://localhost:8088/ttl/sendExpirationMsg/你好 2/200
      *
      * @param message
      * @param ttlTime
@@ -45,8 +50,8 @@ public class SendMsgController {
     }
 
     /**
-     * http://localhost:8080/ttl/sendDelayMsg/come on baby1/20000
-     * http://localhost:8080/ttl/sendDelayMsg/come on baby2/2000
+     * http://localhost:8088/ttl/sendDelayMsg/come on baby1/20000
+     * http://localhost:8088/ttl/sendDelayMsg/come on baby2/2000
      * @param message
      * @param deayTime
      */
@@ -55,6 +60,7 @@ public class SendMsgController {
         log.info("当前时间：{},发送一条信息给delayed队列:{},时间间隔：{}", new Date(), message, deayTime);
         rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE_NAME, DelayedQueueConfig.DELAYED_ROUTING_KEY, message, megs -> {
             megs.getMessageProperties().setDelay(deayTime);
+//            megs.getMessageProperties().setMessageCount(); // Mandatory
             return megs;
         });
 

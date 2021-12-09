@@ -10,4 +10,11 @@ public interface WeixinPayService {
      * @return
      */
     Map<String,String> createNative(String out_trade_no, String total_fee);
+
+    /***
+     * 查询订单状态
+     * @param out_trade_no : 客户端自定义订单编号
+     * @return
+     */
+    public Map queryPayStatus(String out_trade_no);
 }

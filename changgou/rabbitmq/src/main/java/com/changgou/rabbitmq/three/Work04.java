@@ -7,7 +7,7 @@ import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-
+// work03 和 work04各启动一个就行
 public class Work04 {
     private static final String TASK_QUEUE_NAME = "ack_name";
 
@@ -27,6 +27,9 @@ public class Work04 {
 
         };
 
+        // 设置不公平分发
+        int prefetchCount = 1;
+        channel.basicQos(prefetchCount);
 
         // 采用手动应答
         boolean autoAck = false;

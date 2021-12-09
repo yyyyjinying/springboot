@@ -32,7 +32,7 @@ public class EmitLog {
             /**
              * basicPublish
              * 交换机
-             * 队列
+             * routingkey
              * 持久化
              * null
              * 消息

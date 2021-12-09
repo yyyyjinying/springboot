@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
  * 1。创建实现类实现接口
  * 2。函数式表达式实现接口
  */
-@Component
+//@Component
 @Slf4j
 public class MyCallback implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
 

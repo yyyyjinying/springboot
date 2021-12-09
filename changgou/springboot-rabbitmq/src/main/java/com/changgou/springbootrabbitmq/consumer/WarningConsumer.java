@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+//@Component
 public class WarningConsumer {
 
     @RabbitListener(queues = ConfirmConfig.WARNING_QUEUE_NAME)

@@ -8,8 +8,11 @@ import com.rabbitmq.client.DeliverCallback;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * 开启多任务
+ */
 public class Worker01 {
-    private static final String QUEUE_NAME = "hello";
+    private static final String QUEUE_NAME = "hello1";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         Channel channel = RabbitMqUtils.getChannel();
@@ -21,9 +24,16 @@ public class Worker01 {
             System.out.println(consumerTag+"消费者取消消息回调接口");
         };
 
-        System.out.println("C1————消息者启动等待消费……");
+        System.out.println("C2————消息者启动等待消费……");
 
+        /**
+         * 消费哪个队列
+         * 是否自动应答:已接受到消息为准 消息应答
+         * 消费成功
+         * 消费失败
+         */
         channel.basicConsume(QUEUE_NAME,true,deliverCallback,cancelCallback);
+
 
     }
 }

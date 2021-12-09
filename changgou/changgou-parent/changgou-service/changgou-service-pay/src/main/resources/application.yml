@@ -5,6 +5,12 @@ spring:
     name: pay
   main:
     allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 172.16.147.184 # 虚拟机IP
+    port: 5672  # 浏览器和配置的端口调用不同 http://172.16.147.184:15672/
+    username: mm
+    password: 123456
+
 eureka:
   client:
     service-url:
@@ -34,4 +40,4 @@ weixin:
   appid: wx8397f8696b538317
   partner: 1473426802
   partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
-  notifyurl: http://www.baidu.com
+  notifyurl: http://yyyyjinyinghs.ticp.vip/notify/url

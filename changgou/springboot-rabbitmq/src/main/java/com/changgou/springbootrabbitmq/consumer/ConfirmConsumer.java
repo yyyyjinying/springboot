@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+//@Component
 public class ConfirmConsumer {
     @RabbitListener(queues = ConfirmConfig.CONFIRM_QUEUE_NAME)
     public void receiveMsg(Message message){

@@ -14,7 +14,7 @@ public class ReceiveLogs01 {
         channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
         /**
          * 生成一个临时的队列 队列的名称是随机的
-         * 当消费者断开和该队列的连接时 队列自动删除
+         * 当消费者断开和该队列的连接时 队列自动删除  ，
          */
         String queueName = channel.queueDeclare().getQueue();
 

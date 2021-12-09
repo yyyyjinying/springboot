@@ -27,6 +27,7 @@ public class WeixinPayServiceImpl implements WeixinPayService {
 
     /****
      * 创建二维码
+     * 使用统一下单接口生成支付二维码
      * @param out_trade_no : 客户端自定义订单编号
      * @param total_fee    : 交易金额,单位：分
      * @return
@@ -72,6 +73,39 @@ public class WeixinPayServiceImpl implements WeixinPayService {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    /***
+     * 查询订单状态
+     * @param out_trade_no : 客户端自定义订单编号
+     * @return
+     */
+    @Override
+    public Map queryPayStatus(String out_trade_no) {
+        try {
+            //1.封装参数
+            Map param = new HashMap();
+            param.put("appid",appid);                            //应用ID
+            param.put("mch_id",partner);                         //商户号
+            param.put("out_trade_no",out_trade_no);              //商户订单编号
+            param.put("nonce_str",WXPayUtil.generateNonceStr()); //随机字符
+
+            //2、将参数转成xml字符，并携带签名
+            String paramXml = WXPayUtil.generateSignedXml(param,partnerkey);
+
+            //3、发送请求
+            HttpClient httpClient = new HttpClient("https://api.mch.weixin.qq.com/pay/orderquery");
+            httpClient.setHttps(true);
+            httpClient.setXmlParam(paramXml);
+            httpClient.post();
+
+            //4、获取返回值，并将返回值转成Map
+            String content = httpClient.getContent();
+            return WXPayUtil.xmlToMap(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

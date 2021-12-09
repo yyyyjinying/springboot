@@ -14,12 +14,12 @@ public class Consumer {
         ConnectionFactory factory = new ConnectionFactory();
 
         // 工厂IP 连接Rabbitmq的队列
-        factory.setHost("172.16.147.181");
-        factory.setUsername("admin");
-        factory.setPassword("admin");
+        factory.setHost("172.16.147.184");
+        factory.setUsername("mm");
+        factory.setPassword("123456");
 
         // 建立联机
-        Connection connection = factory.newConnection();
+        Connection connection = factory.newConnection("app:audit component:event-consumer");
         // 创建信道
         Channel channel = connection.createChannel();
 
