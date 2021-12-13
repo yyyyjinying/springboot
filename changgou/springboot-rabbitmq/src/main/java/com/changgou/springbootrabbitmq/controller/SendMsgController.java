@@ -1,5 +1,6 @@
 package com.changgou.springbootrabbitmq.controller;
 
+import com.changgou.springbootrabbitmq.config.ConfirmConfig01;
 import com.changgou.springbootrabbitmq.config.DelayedQueueConfig;
 import com.changgou.springbootrabbitmq.config.TtlQueueConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,16 @@ public class SendMsgController {
 //            megs.getMessageProperties().setMessageCount(); // Mandatory
             return megs;
         });
+    }
+// http://localhost:8088/ttl/sendProduct/ppppp
+    @GetMapping("/sendProduct/{message}")
+    public void sendProduct(@PathVariable("message") String message){
+        log.info("当前时间：{}，发送一条信息给confirm队列：{}",new Date(),message);
+
+        rabbitTemplate.convertAndSend(ConfirmConfig01.CONFIRM_EXCHANGE_NAME,ConfirmConfig01.CONFIRM_ROUTING_KEY,message,msg->{
+            return msg;
+        });
+
 
     }
 }

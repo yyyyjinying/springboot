@@ -22,14 +22,15 @@ public class ProducerController {
 
     @GetMapping("/sendMessage/{message}")
     public void sendMessage(@PathVariable String message) {
+        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message);
 
-        CorrelationData correlationData = new CorrelationData("1");
-        CorrelationData correlationDataExpetion = new CorrelationData("2");
-
-
-        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
-        // 队列异常
-        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY+"123",message, correlationDataExpetion);
+//        CorrelationData correlationData = new CorrelationData("1");
+//        CorrelationData correlationDataExpetion = new CorrelationData("2");
+//
+//
+//        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
+//        // 队列异常
+//        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY+"123",message, correlationDataExpetion);
         // 制造交换机异常
 //        rabbitTemplate.convertAndSend(ConfirmConfig.CONFIRM_EXCHANGE_NAME,ConfirmConfig.CONFIRM_ROOUTING_KEY,message, correlationData);
 
